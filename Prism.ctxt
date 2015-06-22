@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=dir
+comment0.target=boolean\ canReflect(int)
+comment1.params=dir
+comment1.target=int\ getReflectDir(int)
+comment2.params=dir\ color
+comment2.target=boolean\ isReflecting(int,\ int)
+comment3.params=
+comment3.target=int\ getId()
+comment4.params=
+comment4.target=boolean\ rotate()
+numComments=5

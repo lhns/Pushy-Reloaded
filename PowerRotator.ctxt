@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ onPowerUpdate()
+comment1.params=
+comment1.target=boolean\ rotate()
+comment2.params=directional
+comment2.target=boolean\ canReceivePowerThroughFront(boolean)
+comment3.params=
+comment3.target=int\ getId()
+numComments=4

@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ created()
+comment1.params=
+comment1.target=void\ update()
+comment2.params=obj
+comment2.target=boolean\ solidAgainst(GameObj)
+comment3.params=
+comment3.target=int\ getRenderOrder()
+comment4.params=gameObj
+comment4.target=void\ edit(GameObj)
+comment5.params=
+comment5.target=void\ edited()
+numComments=6

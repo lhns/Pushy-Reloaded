@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=obj
+comment0.target=boolean\ pushable(GameObj)
+comment1.params=
+comment1.target=void\ onMove()
+comment2.params=
+comment2.target=void\ created()
+comment3.params=
+comment3.target=int\ getId()
+numComments=4

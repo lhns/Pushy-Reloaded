@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=gameObj
+comment0.target=void\ edit(GameObj)
+comment1.params=
+comment1.target=void\ edited()
+comment2.params=color\ bool
+comment2.target=java.lang.String\ getColoredIcon(int,\ boolean)
+comment3.params=
+comment3.target=int\ getColor()
+comment4.params=color
+comment4.target=void\ setColor(int)
+numComments=5

@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ update()
+comment1.params=color\ bool
+comment1.target=java.lang.String\ getColoredIcon(int,\ boolean)
+comment2.params=
+comment2.target=int\ getColor()
+comment3.params=color
+comment3.target=void\ setColor(int)
+comment4.params=
+comment4.target=void\ created()
+comment5.params=obj
+comment5.target=boolean\ solidAgainst(GameObj)
+comment6.params=obj
+comment6.target=boolean\ solidAgainstPost(GameObj)
+comment7.params=obj
+comment7.target=void\ onLeave(GameObj)
+comment8.params=
+comment8.target=int\ getRenderOrder()
+numComments=9

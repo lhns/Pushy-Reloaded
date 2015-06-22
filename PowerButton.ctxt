@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.params=obj
+comment0.target=boolean\ solidAgainst(GameObj)
+comment1.params=obj
+comment1.target=boolean\ solidAgainstPost(GameObj)
+comment2.params=obj
+comment2.target=void\ onLeave(GameObj)
+comment3.params=
+comment3.target=void\ onRemove()
+comment4.params=
+comment4.target=boolean\ oneDirectionalProvider()
+comment5.params=
+comment5.target=int\ getId()
+comment6.params=
+comment6.target=boolean\ canProvidePower()
+comment7.params=
+comment7.target=int\ getRenderOrder()
+numComments=8

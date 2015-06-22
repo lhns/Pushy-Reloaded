@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.params=file\ pushyWorld
+comment0.target=LevelFile(java.io.File,\ PushyWorld)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ LevelFile\r\n
+comment1.params=pushyWorld
+comment1.target=LevelFile(PushyWorld)
+comment10.params=
+comment10.target=java.lang.String\ getFileExt()
+comment2.params=
+comment2.target=void\ load()
+comment3.params=
+comment3.target=void\ save()
+comment4.params=
+comment4.target=void\ loadPe()
+comment5.params=
+comment5.target=void\ savePe()
+comment6.params=stream
+comment6.target=void\ readPe(java.io.DataInputStream)
+comment7.params=stream
+comment7.target=void\ writePe(java.io.DataOutputStream)
+comment8.params=tmpStream\ id
+comment8.target=void\ readObject(java.io.DataInputStream,\ int)
+comment9.params=tmpStream\ gameObj
+comment9.target=void\ writeObject(java.io.DataOutputStream,\ GameObj)
+numComments=11

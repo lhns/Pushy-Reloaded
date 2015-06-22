@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=obj
+comment0.target=boolean\ solidAgainst(GameObj)
+comment1.params=
+comment1.target=int\ getId()
+comment2.params=
+comment2.target=int\ getRenderOrder()
+numComments=3

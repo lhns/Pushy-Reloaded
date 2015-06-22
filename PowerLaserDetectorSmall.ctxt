@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=color\ power
+comment0.target=java.lang.String\ getColoredIcon(int,\ boolean)
+comment1.params=obj
+comment1.target=boolean\ solidAgainst(GameObj)
+comment2.params=
+comment2.target=int\ getId()
+numComments=3

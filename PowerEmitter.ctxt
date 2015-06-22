@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=obj
+comment0.target=boolean\ solidAgainst(GameObj)
+comment1.params=
+comment1.target=boolean\ oneDirectionalProvider()
+comment2.params=
+comment2.target=boolean\ canProvidePower()
+comment3.params=
+comment3.target=boolean\ isProvidingPower()
+comment4.params=
+comment4.target=int\ getId()
+numComments=5

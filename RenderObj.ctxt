@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=
+comment0.target=boolean\ noClip()
+comment1.params=obj
+comment1.target=boolean\ solidAgainst(GameObj)
+comment2.params=
+comment2.target=boolean\ canLeaveWorld()
+comment3.params=
+comment3.target=int\ getRenderOrder()
+comment4.params=
+comment4.target=int\ getDelay()
+numComments=5

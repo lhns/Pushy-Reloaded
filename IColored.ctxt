@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=
+comment0.target=int\ getColor()
+comment1.params=color
+comment1.target=void\ setColor(int)
+comment2.params=color\ bool
+comment2.target=java.lang.String\ getColoredIcon(int,\ boolean)
+numComments=3

@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ update()
+comment1.params=
+comment1.target=void\ onMove()
+comment2.params=
+comment2.target=void\ checkKeys()
+comment3.params=client\ packet
+comment3.target=void\ receive(com.dafttech.network.Client,\ com.dafttech.network.packet.SimplePacket)
+comment4.params=client
+comment4.target=void\ connect(com.dafttech.network.Client)
+comment5.params=client\ reason
+comment5.target=void\ disconnect(com.dafttech.network.Client,\ com.dafttech.network.disconnect.Disconnect)
+comment6.params=packet
+comment6.target=void\ receive(com.dafttech.network.packet.SimplePacket)
+comment7.params=
+comment7.target=int\ getId()
+numComments=8

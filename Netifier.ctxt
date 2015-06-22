@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=gameObj
+comment0.target=void\ edit(GameObj)
+comment1.params=
+comment1.target=void\ edited()
+comment2.params=
+comment2.target=int\ getNetwork()
+numComments=3

@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ update()
+comment1.params=obj
+comment1.target=boolean\ solidAgainst(GameObj)
+comment2.params=
+comment2.target=int\ getId()
+numComments=3

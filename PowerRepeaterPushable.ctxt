@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ onPowerUpdate()
+comment1.params=obj
+comment1.target=boolean\ solidAgainst(GameObj)
+comment2.params=obj
+comment2.target=boolean\ pushable(GameObj)
+comment3.params=
+comment3.target=void\ onMove()
+comment4.params=newDir
+comment4.target=void\ onRotate(int)
+comment5.params=
+comment5.target=boolean\ isProvidingPower()
+comment6.params=
+comment6.target=int\ getId()
+numComments=7
