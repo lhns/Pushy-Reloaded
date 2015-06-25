@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-import com.dafttech.network.packet.*;
+import org.lolhens.network.packet.*;
 /**
  * Write a description of class LevelFile here.
  * 
@@ -86,7 +86,7 @@ public class LevelFile
         
         if (pushyWorld.networkInterface != null) {
             try {
-                pushyWorld.networkInterface.send(new SimplePacket(3));
+                //pushyWorld.networkInterface.send(new SimplePacket(3));
             } catch (Exception e) {
             }
         }
@@ -152,7 +152,7 @@ public class LevelFile
         }
         if (pushyWorld.networkInterface != null) {
             try {
-                pushyWorld.networkInterface.send(new SimplePacket(3));
+                //pushyWorld.networkInterface.send(new SimplePacket(3));
             } catch (Exception e) {
             }
         }

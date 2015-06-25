@@ -1,9 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import javax.swing.*;
-import com.dafttech.network.*;
-import com.dafttech.network.packet.*;
-import com.dafttech.network.protocol.*;
-import com.dafttech.network.disconnect.*;
+import org.lolhens.network.*;
+import org.lolhens.network.packet.*;
+import org.lolhens.network.protocol.*;
+import org.lolhens.network.disconnect.*;
+import org.lolhens.network.nio.*;
 /**
  * Write a description of class LocalPushy here.
  * 
@@ -75,10 +76,10 @@ public class LocalPushy extends Pushy
                 if (address != null) {
                     try {
                         if (serverMode.toLowerCase().equals("y")) {
-                            getWorld().networkInterface = new Server<SimplePacket>(SimpleProtocol.class, address) {
+                            getWorld().networkInterface = new Server<SimplePacket>(SimpleProtocol.class) { //, address
                                 public void receive(Client<SimplePacket> client, SimplePacket packet) {
                                     getWorld().packetQueue.add(packet);
-                                    for (Client<SimplePacket> cClient : getClients()) {
+                                    for (AbstractClient<SimplePacket> cClient : getClients()) {
                                         try {
                                             if (cClient != client) cClient.send(packet);
                                         } catch (Exception e) {
@@ -88,9 +89,9 @@ public class LocalPushy extends Pushy
                                 }
                                 
                                 public void connect(Client<SimplePacket> client) {
-                                    for (Client<SimplePacket> cClient : getClients()) {
+                                    for (AbstractClient<SimplePacket> cClient : getClients()) {
                                         try {
-                                            if (cClient != client) cClient.send(new SimplePacket(4));
+                                            //if (cClient != client) cClient.send(new SimplePacket(4));
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
@@ -108,7 +109,7 @@ public class LocalPushy extends Pushy
                                     getWorld().send();
                                 }
                                 
-                                public void disconnect(Client<SimplePacket> client, Disconnect reason) {
+                                public void disconnect(Client<SimplePacket> client, DisconnectReason reason) {
                                     for (Object obj : getWorld().getObjects(null)) {
                                         if (obj instanceof RemotePushy) {
                                             if (((RemotePushy)obj).client == client) ((GameObj)obj).remove();
@@ -117,10 +118,10 @@ public class LocalPushy extends Pushy
                                 }
                             };
                         } else {
-                            getWorld().networkInterface = new Client<SimplePacket>(SimpleProtocol.class, address) {
-                                public void receive(SimplePacket packet) {
+                            getWorld().networkInterface = new Client<SimplePacket>(SimpleProtocol.class) { //, address
+                                /*public void receive(SimplePacket packet) {
                                     getWorld().packetQueue.add(packet);
-                                }
+                                }*/
                             };
                         }
                     } catch (Exception e) {

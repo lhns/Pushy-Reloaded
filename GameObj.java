@@ -2,7 +2,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 import java.lang.*;
 import java.io.*;
-import com.dafttech.classloader.*;
+import org.lolhens.classfile.*;
 
 /**
  * Write a description of class GameObj here.
@@ -268,25 +268,34 @@ public class GameObj extends Actor
     }
     
     public static final void loadGameObjects() {
-        ClassDiscoverer discoverer = new ClassDiscoverer(GameObj.class, "");
-        List<ContainedFile> classFiles = discoverer.discover();
-        for (int i = classFiles.size() - 1; i >= 0; i--) {
-            if (classFiles.get(i).toString().contains("PushyWorld")) classFiles.remove(i);
-        }
-        ClassFileLoader classFileLoader = new ClassFileLoader(classFiles);
-        classFileLoader.setParentClassLoader(GameObj.class.getClassLoader());
-        for (Class gameObjClass : classFileLoader.loadClasses()) {
-            if (gameObjClass.toString().startsWith("class") && !gameObjClass.toString().contains(".") && gameObjClass != PushyWorld.class && gameObjClass != ObjectSelector.class) {
-                Object gameObj = null;
-                try {
-                    gameObj = gameObjClass.newInstance();
-                } catch (Exception e) {
-                }
-                if (gameObj != null && gameObj instanceof GameObj) {
-                    testForId((GameObj) gameObj);
-                    gameObjects.add((GameObj) gameObj);
+        try {
+            Set<URLClassLocation> classLocations = new URLClassLocation(GameObj.class).discoverSourceURL();
+            
+            Iterator<URLClassLocation> iterator = classLocations.iterator();
+            while (iterator.hasNext())
+                if (iterator.next().toString().contains("PushyWorld")) iterator.remove();
+        
+            for (URLClassLocation classLocation : classLocations) {
+                Class<?> gameObjClass = classLocation.loadClass(GameObj.class.getClassLoader());
+                
+                if (gameObjClass.toString().startsWith("class") && !gameObjClass.toString().contains(".") && gameObjClass != PushyWorld.class && gameObjClass != ObjectSelector.class) {
+                    Object gameObj = null;
+                    
+                    try {
+                        gameObj = gameObjClass.newInstance();
+                    } catch (Exception e) {
+                    }
+                    
+                    if (gameObj != null && gameObj instanceof GameObj) {
+                        testForId((GameObj) gameObj);
+                        gameObjects.add((GameObj) gameObj);
+                    }
                 }
             }
+        } catch (IOException e) {
+            return;
+        } catch (ClassNotFoundException e) {
+            return;
         }
     }
     

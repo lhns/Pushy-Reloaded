@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import com.dafttech.network.*;
+import org.lolhens.network.*;
 
 /**
  * Write a description of class RemotePushy here.
@@ -9,7 +9,7 @@ import com.dafttech.network.*;
  */
 public class RemotePushy extends Pushy
 {
-    public Client<?> client;
+    public AbstractClient<?> client;
 
     public void update()
     {

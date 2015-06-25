@@ -2,11 +2,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 import java.io.*;
 import java.nio.*;
-import com.dafttech.network.*;
-import com.dafttech.network.packet.*;
-import com.dafttech.network.protocol.*;
-import com.dafttech.classloader.*;
-import com.dafttech.primitive.*;
+import org.lolhens.network.*;
+import org.lolhens.network.packet.*;
+import org.lolhens.network.protocol.*;
+import org.lolhens.classfile.*;
+import org.lolhens.primitive.*;
 import javax.swing.*;
 
 /**
@@ -21,7 +21,7 @@ public class PushyWorld extends World
     private GameObj dragged = null;
     public ExtraData extraData = new ExtraData();
     KeyManager keyManager = new KeyManager();
-    public NetworkInterface<SimplePacket> networkInterface = null;
+    public ProtocolProvider<SimplePacket> networkInterface = null;
     public List<SimplePacket> packetQueue = new ArrayList<SimplePacket>();
     public PushyWorld()
     {
@@ -53,7 +53,7 @@ public class PushyWorld extends World
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 new LevelFile(this).writePe(new DataOutputStream(stream));
                 byte[] bytes = stream.toByteArray();
-                networkInterface.send(new SimplePacket(0, bytes));
+                //networkInterface.send(new SimplePacket(0, bytes));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -65,8 +65,8 @@ public class PushyWorld extends World
             try {
                 ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
                 DataOutputStream stream = new DataOutputStream(byteStream);
-                stream.write(Primitive.INT.toByteArray(x));
-                stream.write(Primitive.INT.toByteArray(y));
+                stream.write(PrimitiveUtil.INTEGER.toByteArray(x, ByteOrder.BIG_ENDIAN));
+                stream.write(PrimitiveUtil.INTEGER.toByteArray(y, ByteOrder.BIG_ENDIAN));
                 GameObj gameObj = null;
                 for (Object obj : getObjects(null)) {
                     if (obj instanceof GameObj) {
@@ -84,7 +84,7 @@ public class PushyWorld extends World
                     }
                 }
                 byte[] bytes = byteStream.toByteArray();
-                networkInterface.send(new SimplePacket(1, bytes));
+                //networkInterface.send(new SimplePacket(1, bytes));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -101,8 +101,8 @@ public class PushyWorld extends World
                 e.printStackTrace();
             }
         } else if (packet.channel == 1) {
-            int x = Primitive.INT.fromByteArray(packet.data);
-            int y = Primitive.INT.fromByteArray(packet.data, 4);
+            int x = PrimitiveUtil.INTEGER.fromByteArray(packet.data, ByteOrder.BIG_ENDIAN);
+            int y = PrimitiveUtil.INTEGER.fromByteArray(packet.data, 4, ByteOrder.BIG_ENDIAN);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Arrays.copyOfRange(packet.data, 8, packet.data.length));
             for (Object obj : getObjects(null)) {
                 if (obj instanceof GameObj) {
@@ -135,7 +135,7 @@ public class PushyWorld extends World
             GameObj.reading = false;
         } else if (packet.channel == 3) {
             try {
-                networkInterface.send(new SimplePacket(4));
+                //networkInterface.send(new SimplePacket(4));
             } catch (Exception e) {
             }
         } else if (packet.channel == 4) {
@@ -196,6 +196,7 @@ public class PushyWorld extends World
     public GameObj getTopmostGameObjAt(int x, int y) {
         GameObj topmost = null;
         for (Object obj : getObjectsAt(x, y, null)) {
+            if (!(obj instanceof GameObj)) continue;
             GameObj gameObj = (GameObj) obj;
             if (!gameObj.isDead() && !(gameObj instanceof Tool) &&
                (topmost == null || gameObj.getRenderOrder() > topmost.getRenderOrder())) topmost = gameObj;
@@ -264,7 +265,7 @@ public class PushyWorld extends World
         extraData.putInt("openGoals", 0);
         addObject(new Menu(), 2, 0);
         try {
-            if (!GameObj.reading && networkInterface != null) networkInterface.send(new SimplePacket(2, new byte[0]));
+            //if (!GameObj.reading && networkInterface != null) networkInterface.send(new SimplePacket(2, new byte[0]));
         } catch (Exception e) {
             e.printStackTrace();
         }
