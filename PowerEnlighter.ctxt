@@ -1,8 +1,10 @@
 #BlueJ class context
-comment0.params=
-comment0.target=void\ onPowerUpdate()
-comment1.params=obj
-comment1.target=boolean\ solidAgainst(GameObj)
-comment2.params=
-comment2.target=int\ getId()
-numComments=3
+comment0.target=PowerEnlighter
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ PowerEnlighter\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=void\ onPowerUpdate()
+comment2.params=obj
+comment2.target=boolean\ solidAgainst(GameObj)
+comment3.params=
+comment3.target=int\ getId()
+numComments=4

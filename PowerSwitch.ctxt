@@ -1,14 +1,16 @@
 #BlueJ class context
-comment0.params=obj
-comment0.target=boolean\ solidAgainst(GameObj)
-comment1.params=
-comment1.target=void\ onPowerUpdate()
+comment0.target=PowerSwitch
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ PowerSwitch\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=obj
+comment1.target=boolean\ solidAgainst(GameObj)
 comment2.params=
-comment2.target=boolean\ oneDirectionalProvider()
+comment2.target=void\ onPowerUpdate()
 comment3.params=
-comment3.target=int\ getRenderOrder()
+comment3.target=boolean\ oneDirectionalProvider()
 comment4.params=
-comment4.target=int\ getId()
+comment4.target=int\ getRenderOrder()
 comment5.params=
-comment5.target=boolean\ canProvidePower()
-numComments=6
+comment5.target=int\ getId()
+comment6.params=
+comment6.target=boolean\ canProvidePower()
+numComments=7

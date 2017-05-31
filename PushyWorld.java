@@ -23,6 +23,7 @@ public class PushyWorld extends World
     KeyManager keyManager = new KeyManager();
     public ProtocolProvider<SimplePacket> networkInterface = null;
     public List<SimplePacket> packetQueue = new ArrayList<SimplePacket>();
+    
     public PushyWorld()
     {
         super(35/*20*/, 28/*12*/, 32);

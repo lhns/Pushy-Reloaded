@@ -1,8 +1,10 @@
 #BlueJ class context
-comment0.params=
-comment0.target=void\ update()
+comment0.target=RenderSensor
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ RenderSensor\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
-comment1.target=int\ getRenderOrder()
+comment1.target=void\ update()
 comment2.params=
-comment2.target=boolean\ needsCreator()
-numComments=3
+comment2.target=int\ getRenderOrder()
+comment3.params=
+comment3.target=boolean\ needsCreator()
+numComments=4

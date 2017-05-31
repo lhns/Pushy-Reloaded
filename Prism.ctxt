@@ -1,12 +1,14 @@
 #BlueJ class context
-comment0.params=dir
-comment0.target=boolean\ canReflect(int)
+comment0.target=Prism
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Prism\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=dir
-comment1.target=int\ getReflectDir(int)
-comment2.params=dir\ color
-comment2.target=boolean\ isReflecting(int,\ int)
-comment3.params=
-comment3.target=int\ getId()
+comment1.target=boolean\ canReflect(int)
+comment2.params=dir
+comment2.target=int\ getReflectDir(int)
+comment3.params=dir\ color
+comment3.target=boolean\ isReflecting(int,\ int)
 comment4.params=
-comment4.target=boolean\ rotate()
-numComments=5
+comment4.target=int\ getId()
+comment5.params=
+comment5.target=boolean\ rotate()
+numComments=6

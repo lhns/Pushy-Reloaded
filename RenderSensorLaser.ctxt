@@ -1,4 +1,6 @@
 #BlueJ class context
-comment0.params=
-comment0.target=void\ update()
-numComments=1
+comment0.target=RenderSensorLaser
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ RenderSensorLaser\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=void\ update()
+numComments=2

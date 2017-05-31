@@ -1,12 +1,14 @@
 #BlueJ class context
-comment0.params=obj
-comment0.target=boolean\ solidAgainst(GameObj)
+comment0.target=Key
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Key\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=obj
-comment1.target=boolean\ solidAgainstPost(GameObj)
+comment1.target=boolean\ solidAgainst(GameObj)
 comment2.params=obj
-comment2.target=boolean\ pushable(GameObj)
-comment3.params=
-comment3.target=int\ getId()
+comment2.target=boolean\ solidAgainstPost(GameObj)
+comment3.params=obj
+comment3.target=boolean\ pushable(GameObj)
 comment4.params=
-comment4.target=int\ getRenderOrder()
-numComments=5
+comment4.target=int\ getId()
+comment5.params=
+comment5.target=int\ getRenderOrder()
+numComments=6

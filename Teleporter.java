@@ -17,7 +17,7 @@ public class Teleporter extends GameObj
     
     public boolean solidAgainstPost(GameObj obj) {
         if (obj instanceof Pushy || obj instanceof Apple || obj instanceof Key) {
-            List<Actor> teles = getWorld().getObjects(Teleporter.class);
+            List<Teleporter> teles = getWorld().getObjects(Teleporter.class);
             teles.remove(this);
             if (teles.size()==0) return false;
             Teleporter tele = null;

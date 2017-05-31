@@ -1,9 +1,11 @@
 #BlueJ class context
-comment0.params=
-comment0.target=void\ act()
-comment0.text=\r\n\ Act\ -\ do\ whatever\ the\ GuiObjectField\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
-comment1.params=gameObjClass
-comment1.target=void\ setGameObj(java.lang.Class)
-comment2.params=
-comment2.target=void\ updateImg()
-numComments=3
+comment0.target=GuiObjectField
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ GuiObjectField\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\r\n\ Act\ -\ do\ whatever\ the\ GuiObjectField\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+comment2.params=gameObjClass
+comment2.target=void\ setGameObj(java.lang.Class)
+comment3.params=
+comment3.target=void\ updateImg()
+numComments=4

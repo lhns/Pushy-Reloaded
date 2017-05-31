@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 import java.io.*;
-import java.awt.Color;
+
 
 /**
  * Write a description of class PowerObj here.

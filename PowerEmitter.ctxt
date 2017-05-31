@@ -1,12 +1,14 @@
 #BlueJ class context
-comment0.params=obj
-comment0.target=boolean\ solidAgainst(GameObj)
-comment1.params=
-comment1.target=boolean\ oneDirectionalProvider()
+comment0.target=PowerEmitter
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ PowerEmitter\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=obj
+comment1.target=boolean\ solidAgainst(GameObj)
 comment2.params=
-comment2.target=boolean\ canProvidePower()
+comment2.target=boolean\ oneDirectionalProvider()
 comment3.params=
-comment3.target=boolean\ isProvidingPower()
+comment3.target=boolean\ canProvidePower()
 comment4.params=
-comment4.target=int\ getId()
-numComments=5
+comment4.target=boolean\ isProvidingPower()
+comment5.params=
+comment5.target=int\ getId()
+numComments=6

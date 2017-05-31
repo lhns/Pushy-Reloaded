@@ -1,4 +1,6 @@
 #BlueJ class context
-comment0.params=
-comment0.target=int\ getColor()
-numComments=1
+comment0.target=ColorizerRed
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ ColorizerRed\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=int\ getColor()
+numComments=2

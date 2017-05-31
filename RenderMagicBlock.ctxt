@@ -1,6 +1,8 @@
 #BlueJ class context
-comment0.params=
-comment0.target=void\ update()
+comment0.target=RenderMagicBlock
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ RenderMagicBlock\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
-comment1.target=int\ getDelay()
-numComments=2
+comment1.target=void\ update()
+comment2.params=
+comment2.target=int\ getDelay()
+numComments=3

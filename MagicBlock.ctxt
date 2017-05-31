@@ -1,10 +1,12 @@
 #BlueJ class context
-comment0.params=obj
-comment0.target=boolean\ pushable(GameObj)
-comment1.params=
-comment1.target=void\ onMove()
+comment0.target=MagicBlock
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ MagicBlock\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=obj
+comment1.target=boolean\ pushable(GameObj)
 comment2.params=
-comment2.target=void\ created()
+comment2.target=void\ onMove()
 comment3.params=
-comment3.target=int\ getId()
-numComments=4
+comment3.target=void\ created()
+comment4.params=
+comment4.target=int\ getId()
+numComments=5

@@ -29,7 +29,7 @@ public class MotionSensor extends GameObj
             extraData.putBoolean("active", true);
             Sound.power.play();
             new RenderSensor().addToWorld(getWorld(), getX(), getY(), this);
-            List<Actor> sensors = getWorld().getObjects(MotionSensor.class);
+            List<MotionSensor> sensors = getWorld().getObjects(MotionSensor.class);
             sensors.remove(this);
             for (Actor actor : sensors) {
                 MotionSensor sensor = (MotionSensor)actor;

@@ -1,8 +1,10 @@
 #BlueJ class context
-comment0.params=gameObj
-comment0.target=void\ edit(GameObj)
-comment1.params=
-comment1.target=void\ edited()
+comment0.target=Netifier
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Netifier\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=gameObj
+comment1.target=void\ edit(GameObj)
 comment2.params=
-comment2.target=int\ getNetwork()
-numComments=3
+comment2.target=void\ edited()
+comment3.params=
+comment3.target=int\ getNetwork()
+numComments=4
