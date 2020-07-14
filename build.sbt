@@ -1,20 +1,49 @@
-name := "Pushy-Reloaded"
-version := "2.0.1-SNAPSHOT"
+lazy val commonSettings: Seq[Setting[_]] = Seq(
+  name := "Pushy-Reloaded",
+  version := "2.0.1-SNAPSHOT",
 
-scalaVersion := "2.13.3"
+  scalaVersion := "2.13.3",
 
-mainClass := Some("greenfoot.export.GreenfootScenarioApplication")
-
-lazy val osName: String =
-  if (scala.util.Properties.isLinux) "linux"
-  else if (scala.util.Properties.isMac) "mac"
-  else if (scala.util.Properties.isWin) "win"
-  else throw new Exception("Unknown platform!")
-
-libraryDependencies ++= Seq(
-  "org.openjfx" % "javafx-base" % "14.0.1" classifier osName,
-  "org.openjfx" % "javafx-controls" % "14.0.1" classifier osName,
-  "org.openjfx" % "javafx-graphics" % "14.0.1" classifier osName,
-  "org.openjfx" % "javafx-media" % "14.0.1" classifier osName,
-  "org.openjfx" % "javafx-swing" % "14.0.1" classifier osName,
+  addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
 )
+
+lazy val root = project.in(file("."))
+  .settings(commonSettings)
+  .settings(
+    publishArtifact := false
+  )
+  .aggregate(server)
+
+lazy val frontend = project
+  .enablePlugins(ScalaJSWebjarPlugin)
+  .settings(commonSettings)
+  .settings(
+    libraryDependencies ++= Seq(
+      "org.typelevel" %%% "cats-core" % "2.1.1",
+      "org.scala-js" %%% "scalajs-dom" % "1.0.0",
+    ),
+
+    scalaJSLinkerConfig := scalaJSLinkerConfig.value.withESFeatures(_.withUseECMAScript2015(false)),
+    scalaJSUseMainModuleInitializer := true,
+  )
+
+lazy val server = project
+  .enablePlugins(BuildInfoPlugin)
+  .dependsOn(frontend.webjar)
+  .settings(commonSettings)
+  .settings(
+    libraryDependencies ++= Seq(
+      "ch.qos.logback" % "logback-classic" % "1.2.3",
+      "io.monix" %% "monix" % "3.2.2",
+      "org.http4s" %% "http4s-blaze-server" % "0.21.5",
+      "org.http4s" %% "http4s-circe" % "0.21.5",
+      "org.http4s" %% "http4s-dsl" % "0.21.5",
+      "org.http4s" %% "http4s-scalatags" % "0.21.5",
+    ),
+
+    buildInfoKeys := Seq(
+      "frontendAsset" -> (frontend / Compile / webjarMainResourceName).value,
+      "frontendName" -> (frontend / normalizedName).value,
+      "frontendVersion" -> (frontend / version).value,
+    ),
+  )
