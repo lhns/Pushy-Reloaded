@@ -1,7 +1,10 @@
 package de.lolhens.pushyreloaded.tile
 
 trait TileFactory[Instance <: TileInstance] {
-  def defaultInstance: Instance
+  def variants: Seq[Instance]
+
+  final protected def cached(instance: Instance): Instance =
+    variants.find(_ == instance).getOrElse(instance)
 
   val ids: List[Int]
 

@@ -12,7 +12,11 @@ trait TileInstance {
 
   def physics: Physics
 
-  def zIndex: Int = 0
+  def zIndex: Int = physics match {
+    case Physics.Empty => 0
+    case Physics.Solid => 1
+    case Physics.Pushable => 2
+  }
 
   def update(world: World, pos: Vec2i): Unit = ()
 

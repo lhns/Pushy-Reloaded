@@ -2,39 +2,33 @@ package de.lolhens.pushyreloaded.tile
 
 import de.lolhens.pushyreloaded.{Image, Physics}
 
-case class Ball(color: Ball.Color) extends TileInstance {
+case class Ball private(color: Ball.Color) extends TileInstance {
   override type Self = Ball
 
   override def factory: TileFactory[Ball] = Ball
 
-  override lazy val image: Image = Ball.images(this)
+  override lazy val image: Image = Image(s"/assets/images/${color.index + 1}.png")
 
   override def physics: Physics = Physics.Pushable
 }
 
 object Ball extends TileFactory[Ball] {
+  def apply(color: Ball.Color): Ball = cached(new Ball(color))
 
-  sealed trait Color
+  override val variants: Seq[Ball] = Color.values.map(new Ball(_))
+
+  sealed abstract class Color(val index: Int)
 
   object Color {
 
-    case object Red extends Color
+    case object Red extends Color(0)
 
-    case object Blue extends Color
+    case object Blue extends Color(1)
 
-    case object Green extends Color
+    case object Green extends Color(2)
 
+    val values: List[Color] = List(Red, Blue, Green)
   }
-
-  private val images: Map[Ball, Image] = List(
-    Ball(Color.Red),
-    Ball(Color.Blue),
-    Ball(Color.Green)
-  ).zipWithIndex.map {
-    case (tile, i) => tile -> Image(s"/assets/images/${i + 1}.png")
-  }.toMap
-
-  override def defaultInstance: Ball = Ball(Color.Red)
 
   override val ids: List[Int] = List(1, 2, 3)
 

@@ -18,10 +18,10 @@ object Main {
 
     dom.window.addEventListener("keydown", (e: dom.KeyboardEvent) => {
       Option(e.key match {
-        case "w" => Direction.Up
-        case "a" => Direction.Left
-        case "s" => Direction.Down
-        case "d" => Direction.Right
+        case "w" | "ArrowUp" => Direction.Up
+        case "a" | "ArrowLeft" => Direction.Left
+        case "s" | "ArrowDown" => Direction.Down
+        case "d" | "ArrowRight" => Direction.Right
         case _ => null
       }).foreach(level.playerMove)
     }, useCapture = false)

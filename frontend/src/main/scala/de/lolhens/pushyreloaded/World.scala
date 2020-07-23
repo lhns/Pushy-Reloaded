@@ -9,6 +9,7 @@ class World private(size: Vec2i,
                     private var worldTiles: Seq[WorldTile[TileInstance]]) {
   add(Vec2i(1, 1), Player(Direction.Up))
   add(Vec2i(2, 2), Ball(Ball.Color.Red))
+  add(Vec2i(5, 4), BallHole(Ball.Color.Red))
 
   def list(pos: Vec2i): Seq[WorldTile[TileInstance]] =
     worldTiles.iterator.filter(_.pos == pos).filterNot(_.instance == Background).toSeq
