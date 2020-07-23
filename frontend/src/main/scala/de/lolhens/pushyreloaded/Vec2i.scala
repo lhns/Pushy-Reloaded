@@ -5,17 +5,23 @@ case class Vec2i(x: Int, y: Int) {
 
   def withY(y: Int): Vec2i = copy(y = y)
 
-  def map(x: Int => Int, y: Int => Int): Vec2i =
-    Vec2i(x(this.x), y(this.y))
+  def map(x: Int => Int, y: Int => Int): Vec2i = Vec2i(x(this.x), y(this.y))
+
+  def offset(offset: Vec2i): Vec2i = Vec2i(x + offset.x, y + offset.y)
 
   def offset(direction: Direction): Vec2i = direction match {
-    case Direction.Left => withX(x - 1)
-    case Direction.Up => withY(y - 1)
-    case Direction.Right => withX(x + 1)
-    case Direction.Down => withY(y + 1)
+    case Direction.Left => offset(Vec2i.Left)
+    case Direction.Up => offset(Vec2i.Up)
+    case Direction.Right => offset(Vec2i.Right)
+    case Direction.Down => offset(Vec2i.Down)
   }
 }
 
 object Vec2i {
-  val zero: Vec2i = Vec2i(0, 0)
+  val Zero: Vec2i = Vec2i(0, 0)
+
+  val Left: Vec2i = Vec2i(-1, 0)
+  val Up: Vec2i = Vec2i(0, -1)
+  val Right: Vec2i = Vec2i(1, 0)
+  val Down: Vec2i = Vec2i(0, 1)
 }

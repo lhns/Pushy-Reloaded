@@ -1,4 +1,4 @@
-package de.lolhens.pushyreloaded.gameobj
+package de.lolhens.pushyreloaded.tile
 
 trait TileFactory[Instance <: TileInstance] {
   def defaultInstance: Instance
