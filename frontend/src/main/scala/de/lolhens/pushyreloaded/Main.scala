@@ -14,7 +14,7 @@ object Main {
     //canvas.height = (0.95 * dom.window.innerHeight).toInt
     //dom.document.body.appendChild(canvas)
 
-    val level = Level(Vec2(20, 12))
+    val level = World(Vec2i(20, 12))
 
     dom.window.addEventListener("keydown", (e: dom.KeyboardEvent) => {
       Option(e.key match {
