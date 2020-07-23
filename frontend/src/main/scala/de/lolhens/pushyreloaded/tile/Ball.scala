@@ -1,6 +1,5 @@
 package de.lolhens.pushyreloaded.tile
 
-import de.lolhens.pushyreloaded.tile.Ball.Color
 import de.lolhens.pushyreloaded.{Image, Physics}
 
 case class Ball(color: Ball.Color) extends TileInstance {
@@ -8,13 +7,7 @@ case class Ball(color: Ball.Color) extends TileInstance {
 
   override def factory: TileFactory[Ball] = Ball
 
-  private def colorId: Int = color match {
-    case Color.Red => 1
-    case Color.Blue => 2
-    case Color.Green => 3
-  }
-
-  override val image: Image = Image(s"/assets/images/$colorId.png")
+  override lazy val image: Image = Ball.images(this)
 
   override def physics: Physics = Physics.Pushable
 }
@@ -32,6 +25,14 @@ object Ball extends TileFactory[Ball] {
     case object Green extends Color
 
   }
+
+  private val images: Map[Ball, Image] = List(
+    Ball(Color.Red),
+    Ball(Color.Blue),
+    Ball(Color.Green)
+  ).zipWithIndex.map {
+    case (tile, i) => tile -> Image(s"/assets/images/${i + 1}.png")
+  }.toMap
 
   override def defaultInstance: Ball = Ball(Color.Red)
 
