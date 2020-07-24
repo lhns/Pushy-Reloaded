@@ -7,6 +7,8 @@ case class Ball private(color: Ball.Color) extends TileInstance {
 
   override def factory: TileFactory[Ball] = Ball
 
+  def withColor(color: Ball.Color): Ball = Ball(color)
+
   override lazy val image: Image = Image(s"/assets/images/${color.index + 1}.png")
 
   override def pushable: Pushable = Pushable.Pushable

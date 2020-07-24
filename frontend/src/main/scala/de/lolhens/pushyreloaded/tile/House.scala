@@ -13,20 +13,18 @@ sealed trait House extends SimpleTile[House] {
 
   override def variants: Seq[House] = Seq(this)
 
-  override def pushable(world: World, pos: Vec2i, direction: Direction, by: TileInstance): (Pushable, () => Unit) =
+  override def pushable(world: World, pos: Vec2i, direction: Direction, by: TileInstance, byPos: Vec2i): (Pushable, () => Unit) =
     by.as(Player) match {
       case Some(_) =>
-        if (world.list.forall { tile =>
-          tile.instance.missionComplete(world, tile.pos)
-        }) {
+        if (world.list.forall(e => e._2.missionComplete(world, e._1))) {
           Pushable.Empty.withAction {
-            Main.world = World(Vec2i(20, 12))
+            Main.world = Main.testWorld
           }
         } else
           Pushable.Solid.withoutAction
 
       case _ =>
-        super.pushable(world, pos, direction, by)
+        super.pushable(world, pos, direction, by, byPos)
     }
 }
 

@@ -21,10 +21,11 @@ trait TileInstance {
            pos: Vec2i,
            direction: Direction): Boolean = {
     val offset = pos.offset(direction)
-    val targets = world.list(offset).map(_.instance.pushable(world, offset, direction, this))
+    val targets = world.get(offset).map(_.pushable(world, offset, direction, this, pos))
     if (targets.forall(_._1.isMovableTo)) {
       targets.foreach(_._2.apply())
-      world.get(pos, factory).find(_.instance == this).foreach(_.moveTo(offset))
+      world.moveTo(pos, this, offset)
+      world.flushChanges()
       true
     } else
       false
@@ -33,45 +34,41 @@ trait TileInstance {
   private final def pushableIfAll(world: World,
                                   pos: Vec2i,
                                   direction: Direction,
-                                  by: TileInstance,
                                   pushableTarget: Pushable => Boolean): (Pushable, () => Unit) = {
     val offset = pos.offset(direction)
-    val targets = world.list(offset).map(_.instance.pushable(world, offset, direction, this))
-    if (targets.forall(e => pushableTarget(e._1))) {
-      (Pushable.Pushable.withAction {
+    val targets = world.get(offset).map(_.pushable(world, offset, direction, this, pos))
+    if (targets.forall(e => pushableTarget(e._1)))
+      Pushable.Pushable.withAction {
         targets.foreach(_._2.apply())
-        world.get(pos, factory).find(_.instance == this).foreach(_.moveTo(offset))
-      })
-    } else {
+        val changed = world.getChanged(pos, this)
+        world.moveTo(pos, changed, offset)
+      }
+    else
       Pushable.Blocked.withoutAction
-    }
   }
 
   protected final def pushableSingle(world: World,
                                      pos: Vec2i,
-                                     direction: Direction,
-                                     by: TileInstance): (Pushable, () => Unit) =
-    pushableIfAll(world, pos, direction, by, _.isEmpty)
+                                     direction: Direction): (Pushable, () => Unit) =
+    pushableIfAll(world, pos, direction, _.isEmpty)
 
   protected final def pushableChain(world: World,
                                     pos: Vec2i,
-                                    direction: Direction,
-                                    by: TileInstance): (Pushable, () => Unit) =
-    pushableIfAll(world, pos, direction, by, _.isMovableTo)
+                                    direction: Direction): (Pushable, () => Unit) =
+    pushableIfAll(world, pos, direction, _.isMovableTo)
 
   def pushable: Pushable
 
   def pushable(world: World,
                pos: Vec2i,
                direction: Direction,
-               by: TileInstance): (Pushable, () => Unit) = {
-    pushable match {
-      case Pushable.Pushable =>
-        pushableSingle(world, pos, direction, by)
+               by: TileInstance,
+               byPos: Vec2i): (Pushable, () => Unit) = pushable match {
+    case Pushable.Pushable =>
+      pushableSingle(world, pos, direction)
 
-      case pushable =>
-        pushable.withoutAction
-    }
+    case pushable =>
+      pushable.withoutAction
   }
 
   def zIndex: Int = pushable match {
@@ -82,7 +79,7 @@ trait TileInstance {
 
   def missionComplete(world: World, pos: Vec2i): Boolean = true
 
-  def update(world: World, pos: Vec2i): Unit = ()
+  //def update(world: World, pos: Vec2i): Unit = ()
 
   def render(ctx: dom.CanvasRenderingContext2D,
              pos: Vec2i): Unit = {

@@ -11,18 +11,18 @@ case class BallHole private(color: Ball.Color) extends TileInstance {
 
   override def pushable: Pushable = Pushable.Empty
 
-  override def pushable(world: World, pos: Vec2i, direction: Direction, by: TileInstance): (Pushable, () => Unit) =
+  override def pushable(world: World, pos: Vec2i, direction: Direction, by: TileInstance, byPos: Vec2i): (Pushable, () => Unit) =
     by.as(Ball) match {
       case Some(ball) =>
         if (ball.color == color)
           Pushable.Empty.withAction {
-            world.get(pos.offset(direction.opposite), Ball).find(_.instance == ball).foreach(world.remove)
+            world.remove(byPos, ball)
           }
         else
           Pushable.Solid.withoutAction
 
       case _ =>
-        super.pushable(world, pos, direction, by)
+        super.pushable(world, pos, direction, by, byPos)
     }
 }
 

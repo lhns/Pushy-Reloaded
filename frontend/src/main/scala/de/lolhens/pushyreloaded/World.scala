@@ -1,62 +1,65 @@
 package de.lolhens.pushyreloaded
 
-import de.lolhens.pushyreloaded.World.WorldTile
 import de.lolhens.pushyreloaded.tile._
 import org.scalajs.dom
 import org.scalajs.dom.html.Canvas
 
+import scala.annotation.tailrec
+import scala.util.chaining._
+
 class World private(size: Vec2i,
-                    private var worldTiles: Seq[WorldTile[TileInstance]]) {
-  ((0 until size.x).map(Vec2i(_, 0)) ++
-    (0 until size.y).map(Vec2i(0, _)) ++
-    (0 until size.x).map(Vec2i(_, size.y - 1)) ++
-    (0 until size.y).map(Vec2i(size.x - 1, _))).foreach(add(_, Wall))
-  add(Vec2i(1, 1), Player(Direction.Up))
-  add(Vec2i(2, 2), Ball(Ball.Color.Red))
-  add(Vec2i(3, 2), Ball(Ball.Color.Green))
-  add(Vec2i(5, 4), BallHole(Ball.Color.Red))
-  add(Vec2i(7, 4), BallHole(Ball.Color.Green))
-  add(Vec2i(8, 6), Box)
-  add(Vec2i(10, 6), BoxTarget)
-  add(size.map(_ - 2, _ - 2), House)
+                    private var worldTiles: Set[(Vec2i, TileInstance)]) {
+  private var _changes: Map[(Vec2i, TileInstance), TileInstance] = Map.empty
 
-  def list: Seq[WorldTile[TileInstance]] =
-    worldTiles.filterNot(_.instance == Background)
+  private def addChanged(pos: Vec2i, tile: TileInstance, newTile: TileInstance): Unit =
+    if (tile != newTile) _changes = _changes + ((pos, tile) -> newTile)
 
-  def list(pos: Vec2i): Seq[WorldTile[TileInstance]] =
-    worldTiles.iterator.filter(_.pos == pos).filterNot(_.instance == Background).toSeq
-
-  def get[Instance <: TileInstance](pos: Vec2i, factory: TileFactory[Instance]): Seq[WorldTile[Instance]] =
-    worldTiles.collect {
-      case tile: WorldTile[Instance]@unchecked if tile.pos == pos && tile.instance.factory == factory =>
-        tile
+  @tailrec
+  final def getChanged(pos: Vec2i, tile: TileInstance): TileInstance =
+    _changes.get(pos -> tile) match {
+      case Some(tile) => getChanged(pos, tile)
+      case None => tile
     }
 
-  def get[Instance <: TileInstance](factory: TileFactory[Instance]): Seq[WorldTile[Instance]] =
-    worldTiles.flatMap(_.as(factory))
+  final def flushChanges(): Unit = _changes = Map.empty
 
-  def add(pos: Vec2i, tile: TileInstance): Unit = {
-    worldTiles = new WorldTile(tile, pos) +: worldTiles
+  def list: Seq[(Vec2i, TileInstance)] =
+    worldTiles.toSeq
+
+  def list[Instance <: TileInstance](factory: TileFactory[Instance]): Seq[(Vec2i, Instance)] =
+    worldTiles.iterator.flatMap(e => e._2.as(factory).map((e._1, _))).toSeq
+
+  def get(pos: Vec2i): Seq[TileInstance] =
+    worldTiles.iterator.filter(_._1 == pos).map(_._2).toSeq
+
+  def get[Instance <: TileInstance](pos: Vec2i, factory: TileFactory[Instance]): Seq[Instance] =
+    worldTiles.iterator.filter(_._1 == pos).flatMap(_._2.as(factory)).toSeq
+
+  def add(pos: Vec2i, tile: TileInstance): Unit =
+    if (tile != Background) {
+      worldTiles = worldTiles + (pos -> tile)
+    }
+
+  def moveTo(pos: Vec2i, tile: TileInstance, newPos: Vec2i): Boolean =
+    remove(pos, tile).tap(if (_) add(newPos, tile))
+
+  def move(pos: Vec2i, tile: TileInstance, f: Vec2i => Vec2i): Boolean =
+    moveTo(pos, tile, f(pos))
+
+  def change(pos: Vec2i, tile: TileInstance, newTile: TileInstance): Boolean =
+    remove(pos, tile).tap(if (_) {
+      addChanged(pos, tile, newTile)
+      add(pos, newTile)
+    })
+
+  def remove(pos: Vec2i, tile: TileInstance): Boolean = {
+    val (removedWorldTiles, newWorldTiles) = worldTiles.partition(e => e._1 == pos && e._2 == tile)
+    worldTiles = newWorldTiles
+    removedWorldTiles.nonEmpty
   }
 
-  def remove(tile: WorldTile[_]): Unit =
-    worldTiles = worldTiles.filterNot(_ == tile)
-
   def playerMove(direction: Direction): Unit = {
-    get(Player).foreach { tile =>
-      /*val pos = tile.pos
-      val newPos = pos.offset(direction)
-      val newPos2 = newPos.offset(direction)
-      val newPosTiles = list(newPos)
-      val pushable = newPosTiles.exists { e =>
-        val physics = e.instance.pushable
-        physics == Pushable.Solid || (physics == Pushable.Pushable && list(newPos2).exists(_.instance.pushable != Pushable.Empty))
-      }
-      newPosTiles.foreach(e => if (e.instance.pushable == Pushable.Pushable) e.moveTo(newPos2))
-      tile.moveTo(newPos)
-      tile.instance.direction = direction*/
-      tile.instance.move(this, tile.pos, direction)
-    }
+    list(Player).foreach(e => e._2.move(this, e._1, direction))
   }
 
   def render(canvas: Canvas): Unit = {
@@ -71,7 +74,7 @@ class World private(size: Vec2i,
       pos = Vec2i(x, y)
     } {
       val renderPos = pos.map(_ * TileInstance.size.x, _ * TileInstance.size.y)
-      val sortedTiles: Seq[TileInstance] = (Background +: list(pos).map(_.instance)).sortBy(_.zIndex)
+      val sortedTiles: Seq[TileInstance] = (Background +: get(pos)).sortBy(_.zIndex)
       sortedTiles.foreach(e => e.render(ctx, renderPos))
     }
   }
@@ -79,16 +82,5 @@ class World private(size: Vec2i,
 
 object World {
   def apply(size: Vec2i): World =
-    new World(size, Seq.empty)
-
-  class WorldTile[Instance <: TileInstance](val instance: Instance,
-                                            var pos: Vec2i) {
-    def moveTo(pos: Vec2i): Unit = this.pos = pos
-
-    def move(f: Vec2i => Vec2i): Unit = moveTo(f(pos))
-
-    final def as[NewInstance <: TileInstance](factory: TileFactory[NewInstance]): Option[WorldTile[NewInstance]] =
-      if (instance.is(factory)) Some(this.asInstanceOf[WorldTile[NewInstance]]) else None
-  }
-
+    new World(size, Set.empty)
 }
