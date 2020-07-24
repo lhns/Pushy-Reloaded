@@ -25,6 +25,8 @@ object Main {
     add(Vec2i(7, 4), BallInk(Ball.Color.Red))
     add(Vec2i(8, 6), Box)
     add(Vec2i(10, 6), BoxTarget)
+    add(Vec2i(12, 6), Button)
+    add(Vec2i(14, 6), SecretDoor)
     add(size.map(_ - 2, _ - 2), House)
 
     world

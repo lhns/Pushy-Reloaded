@@ -17,6 +17,8 @@ trait TileInstance {
 
   def image: Image
 
+  def image(world: World, pos: Vec2i): Image = image
+
   def move(world: World,
            pos: Vec2i,
            direction: Direction): Boolean = {
@@ -82,8 +84,9 @@ trait TileInstance {
   //def update(world: World, pos: Vec2i): Unit = ()
 
   def render(ctx: dom.CanvasRenderingContext2D,
+             world: World,
              pos: Vec2i): Unit = {
-    val image = this.image
+    val image = this.image(world, pos)
     if (image.isReady) {
       ctx.drawImage(image.element, pos.x, pos.y, image.element.width, image.element.height)
     }

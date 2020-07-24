@@ -12,8 +12,8 @@ case class BallInk private(color: Ball.Color) extends TileInstance {
   override def pushable: Pushable = Pushable.Empty
 
   override def pushable(world: World, pos: Vec2i, direction: Direction, by: TileInstance, byPos: Vec2i): (Pushable, () => Unit) =
-    by.as(Ball) match {
-      case Some(ball) =>
+    by match {
+      case Ball(ball) =>
         Pushable.Empty.withAction {
           world.remove(pos, this)
           world.change(byPos, ball, ball.withColor(color))

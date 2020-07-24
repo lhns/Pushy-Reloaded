@@ -9,11 +9,14 @@ case class BallHole private(color: Ball.Color) extends TileInstance {
 
   override lazy val image: Image = Image(s"/assets/images/${color.index + 4}.bmp")
 
-  override def pushable: Pushable = Pushable.Empty
+  override val pushable: Pushable = Pushable.Empty
 
   override def pushable(world: World, pos: Vec2i, direction: Direction, by: TileInstance, byPos: Vec2i): (Pushable, () => Unit) =
-    by.as(Ball) match {
-      case Some(ball) =>
+    by match {
+      case Player(_) =>
+        Pushable.Solid.withoutAction
+
+      case Ball(ball) =>
         if (ball.color == color)
           Pushable.Empty.withAction {
             world.remove(byPos, ball)

@@ -75,7 +75,7 @@ class World private(size: Vec2i,
     } {
       val renderPos = pos.map(_ * TileInstance.size.x, _ * TileInstance.size.y)
       val sortedTiles: Seq[TileInstance] = (Background +: get(pos)).sortBy(_.zIndex)
-      sortedTiles.foreach(e => e.render(ctx, renderPos))
+      sortedTiles.foreach(e => e.render(ctx, this, renderPos))
     }
   }
 }
