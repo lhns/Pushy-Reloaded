@@ -1,18 +1,25 @@
 package de.lolhens.pushyreloaded.tile
 
-import de.lolhens.pushyreloaded.{Direction, Image, Physics}
+import de.lolhens.pushyreloaded._
 
-case class Player(var direction: Direction) extends TileInstance with Directional {
+class Player(var direction: Direction) extends TileInstance with Directional {
   override type Self = Player
 
   override def factory: TileFactory[Player] = Player
 
   override def image: Image = Player.image
 
-  override val physics: Physics = Physics.Solid
+  override val pushable: Pushable = Pushable.Solid
+
+  override def move(world: World, pos: Vec2i, direction: Direction): Boolean = {
+    this.direction = direction
+    super.move(world, pos, direction)
+  }
 }
 
 object Player extends TileFactory[Player] {
+  def apply(direction: Direction): Player = new Player(direction)
+
   private val image: Image = Image("/assets/images/10.png")
 
   override def variants: Seq[Player] = Seq()

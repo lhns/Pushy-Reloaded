@@ -6,6 +6,8 @@ import org.scalajs.dom.html.Canvas
 import scala.scalajs.js
 
 object Main {
+  var world: World = _
+
   def main(args: Array[String]): Unit = {
     val canvas = dom.document.getElementById("canvas").asInstanceOf[Canvas]
     //val ctx = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
@@ -14,7 +16,7 @@ object Main {
     //canvas.height = (0.95 * dom.window.innerHeight).toInt
     //dom.document.body.appendChild(canvas)
 
-    val level = World(Vec2i(20, 12))
+    world = World(Vec2i(20, 12))
 
     dom.window.addEventListener("keydown", (e: dom.KeyboardEvent) => {
       Option(e.key match {
@@ -23,11 +25,11 @@ object Main {
         case "s" | "ArrowDown" => Direction.Down
         case "d" | "ArrowRight" => Direction.Right
         case _ => null
-      }).foreach(level.playerMove)
+      }).foreach(world.playerMove)
     }, useCapture = false)
 
     def update(d: Double): Unit = {
-      level.render(canvas)
+      world.render(canvas)
       //if (bgImage.isReady) {
       //  ctx.drawImage(bgImage.element, 0, 0, bgImage.element.width, bgImage.element.height)
       //}

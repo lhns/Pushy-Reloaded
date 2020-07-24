@@ -1,6 +1,6 @@
 package de.lolhens.pushyreloaded.tile
 
-import de.lolhens.pushyreloaded.{Image, Physics}
+import de.lolhens.pushyreloaded.{Image, Pushable, Vec2i, World}
 
 case class Ball private(color: Ball.Color) extends TileInstance {
   override type Self = Ball
@@ -9,7 +9,9 @@ case class Ball private(color: Ball.Color) extends TileInstance {
 
   override lazy val image: Image = Image(s"/assets/images/${color.index + 1}.png")
 
-  override def physics: Physics = Physics.Pushable
+  override def pushable: Pushable = Pushable.Pushable
+
+  override def missionComplete(world: World, pos: Vec2i): Boolean = false
 }
 
 object Ball extends TileFactory[Ball] {
