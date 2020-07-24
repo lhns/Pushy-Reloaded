@@ -18,7 +18,10 @@ object Main {
       (0 until size.y).map(Vec2i(0, _)) ++
       (0 until size.x).map(Vec2i(_, size.y - 1)) ++
       (0 until size.y).map(Vec2i(size.x - 1, _))).foreach(add(_, Wall))
+
     add(Vec2i(1, 1), Player(Direction.Up))
+    add(Vec2i(3, 1), Teleporter)
+    add(Vec2i(6, 1), Stamp)
     add(Vec2i(2, 2), Ball(Ball.Color.Red))
     add(Vec2i(3, 2), Ball(Ball.Color.Green))
     add(Vec2i(5, 4), BallHole(Ball.Color.Red))
@@ -27,6 +30,7 @@ object Main {
     add(Vec2i(10, 6), BoxTarget)
     add(Vec2i(12, 6), Button)
     add(Vec2i(14, 6), SecretDoor)
+    add(Vec2i(16, 6), Teleporter)
     add(size.map(_ - 2, _ - 2), House)
 
     world

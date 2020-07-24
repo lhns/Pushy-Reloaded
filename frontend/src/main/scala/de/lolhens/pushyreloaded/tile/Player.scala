@@ -2,6 +2,8 @@ package de.lolhens.pushyreloaded.tile
 
 import de.lolhens.pushyreloaded._
 
+import scala.util.chaining._
+
 class Player(var direction: Direction) extends TileInstance with Directional {
   override type Self = Player
 
@@ -13,7 +15,10 @@ class Player(var direction: Direction) extends TileInstance with Directional {
 
   override def move(world: World, pos: Vec2i, direction: Direction): Boolean = {
     this.direction = direction
-    super.move(world, pos, direction)
+    super.move(world, pos, direction).tap(if (_) {
+      if (world.get(pos, Stamp).nonEmpty)
+        world.add(pos.offset(direction), Stamp)
+    })
   }
 }
 

@@ -3,6 +3,10 @@ package de.lolhens.pushyreloaded.tile
 import de.lolhens.pushyreloaded._
 
 sealed trait SecretDoor extends SimpleTile[SecretDoor] {
+  override val id: Int = 12
+
+  override def self: SecretDoor = this
+
   override val image: Image = Image("/assets/images/14.bmp")
   val imageOpen: Image = Image("/assets/images/103.bmp")
 
@@ -14,12 +18,6 @@ sealed trait SecretDoor extends SimpleTile[SecretDoor] {
   override def image(world: World, pos: Vec2i): Image =
     if (buttonPressed(world)) imageOpen
     else image
-
-  override val ids: List[Int] = List(12)
-
-  override def fromId(id: Int): SecretDoor = this
-
-  override def variants: Seq[SecretDoor] = Seq(this)
 
   override val pushable: Pushable = Pushable.Empty
 

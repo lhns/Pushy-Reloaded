@@ -3,13 +3,11 @@ package de.lolhens.pushyreloaded.tile
 import de.lolhens.pushyreloaded._
 
 sealed trait BoxTarget extends SimpleTile[BoxTarget] {
+  override val id: Int = 18
+
+  override def self: BoxTarget = this
+
   override val image: Image = Image("/assets/images/18.bmp")
-
-  override val ids: List[Int] = List(18)
-
-  override def fromId(id: Int): BoxTarget = this
-
-  override def variants: Seq[BoxTarget] = Seq(this)
 
   override val pushable: Pushable = Pushable.Empty
 
