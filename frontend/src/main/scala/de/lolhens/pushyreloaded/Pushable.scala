@@ -6,12 +6,16 @@ sealed trait Pushable {
   def isMovableTo: Boolean
 
   def withoutAction: (this.type, () => Unit) = (this, () => ())
+
+  def maybeWithAction(f: => Unit): (this.type, () => Unit) = withoutAction
 }
 
 object Pushable {
 
   sealed trait MovableTo extends Pushable {
     override def isMovableTo: Boolean = true
+
+    override def maybeWithAction(f: => Unit): (MovableTo.this.type, () => Unit) = withAction(f)
 
     def withAction(f: => Unit): (this.type, () => Unit) = (this, () => f)
   }

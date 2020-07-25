@@ -9,7 +9,7 @@ trait SimpleTile[Instance <: TileInstance] extends TileFactory[Instance] with Ti
 
   def self: Instance
 
-  override val ids: List[Int] = List(id)
+  override lazy val ids: List[Int] = List(id)
 
   override def fromId(id: Int): Instance = self
 

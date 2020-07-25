@@ -3,22 +3,23 @@ package de.lolhens.pushyreloaded.tile
 import de.lolhens.pushyreloaded.Attributes.Attribute
 import de.lolhens.pushyreloaded._
 
-sealed trait Stamp extends SimpleTile[Stamp] {
-  override val id: Int = 11
+sealed trait Key extends SimpleTile[Key] {
+  override val id: Int = 33
 
-  override def self: Stamp = this
+  override def self: Key = this
 
-  override val image: Image = Image("/assets/images/11.bmp")
+  override val image: Image = Image("/assets/images/33.bmp")
 
   override val pushable: Pushable = Pushable.Empty
 
-  val StampAttribute: Attribute[Boolean] = Attribute("stamp", () => false)
+  val KeyAttribute: Attribute[Int] = Attribute("key", () => 0)
 
   override def pushable(world: World, pos: Vec2i, direction: Direction, by: TileInstance, byPos: Vec2i): (Pushable, () => Unit) =
     by match {
       case Player(player) =>
         Pushable.Empty.withAction {
-          player.changeAttributes(_.put(StampAttribute)(true))
+          world.remove(pos, this)
+          player.changeAttributes(_.map(KeyAttribute)(_ + 1))
         }
 
       case _ =>
@@ -26,4 +27,4 @@ sealed trait Stamp extends SimpleTile[Stamp] {
     }
 }
 
-object Stamp extends Stamp
+object Key extends Key

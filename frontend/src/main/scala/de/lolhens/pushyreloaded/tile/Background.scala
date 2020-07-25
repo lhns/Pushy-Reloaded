@@ -12,6 +12,8 @@ sealed trait Background extends SimpleTile[Background] {
   override val zIndex: Int = Int.MinValue
 
   override val pushable: Pushable = Pushable.Empty
+
+  override val isEmpty: Boolean = true
 }
 
 object Background extends Background

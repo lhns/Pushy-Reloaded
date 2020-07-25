@@ -16,10 +16,10 @@ sealed trait House extends SimpleTile[House] {
       case Player(_) =>
         if (world.list.forall(e => e._2.missionComplete(world, e._1))) {
           Pushable.Empty.withAction {
-            Main.world = Main.testWorld
+            Main.next()
           }
         } else
-          Pushable.Solid.withoutAction
+          Pushable.Empty.withoutAction
 
       case _ =>
         super.pushable(world, pos, direction, by, byPos)

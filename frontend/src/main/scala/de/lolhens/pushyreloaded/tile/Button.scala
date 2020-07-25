@@ -13,8 +13,11 @@ sealed trait Button extends SimpleTile[Button] {
 
   override def pushable(world: World, pos: Vec2i, direction: Direction, by: TileInstance, byPos: Vec2i): (Pushable, () => Unit) =
     by match {
-      case Player(_) | Box(_) | Ball(_) =>
-        super.pushable(world, pos, direction, by, byPos)
+      case Player(_) =>
+        Pushable.Empty.withoutAction
+
+      case pushableTile if pushableTile.pushable == Pushable.Pushable =>
+        Pushable.Empty.withoutAction
 
       case _ =>
         Pushable.Solid.withoutAction

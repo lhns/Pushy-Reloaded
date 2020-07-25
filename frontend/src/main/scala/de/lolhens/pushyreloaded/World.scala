@@ -1,5 +1,6 @@
 package de.lolhens.pushyreloaded
 
+import de.lolhens.pushyreloaded.Attributes.WithAttributes
 import de.lolhens.pushyreloaded.tile._
 import org.scalajs.dom
 import org.scalajs.dom.html.Canvas
@@ -8,7 +9,7 @@ import scala.annotation.tailrec
 import scala.util.chaining._
 
 class World private(size: Vec2i,
-                    private var worldTiles: Set[(Vec2i, TileInstance)]) {
+                    private var worldTiles: Set[(Vec2i, TileInstance)]) extends WithAttributes {
   private var _changes: Map[(Vec2i, TileInstance), TileInstance] = Map.empty
 
   private def addChanged(pos: Vec2i, tile: TileInstance, newTile: TileInstance): Unit =
@@ -35,13 +36,30 @@ class World private(size: Vec2i,
   def get[Instance <: TileInstance](pos: Vec2i, factory: TileFactory[Instance]): Seq[Instance] =
     worldTiles.iterator.filter(_._1 == pos).flatMap(_._2.as(factory)).toSeq
 
+  def isEmpty(pos: Vec2i, except: TileInstance => Boolean = _ => false): Boolean =
+    get(pos).forall(e => except(e) || e.isEmpty)
+
   def add(pos: Vec2i, tile: TileInstance): Unit =
+    add(pos, tile, moved = false)
+
+  private def add(pos: Vec2i, tile: TileInstance, moved: Boolean): Unit =
     if (tile != Background) {
       worldTiles = worldTiles + (pos -> tile)
+      tile.addedToWorld(this, pos, moved)
     }
 
+  def remove(pos: Vec2i, tile: TileInstance): Boolean =
+    remove(pos, tile, moved = false)
+
+  private def remove(pos: Vec2i, tile: TileInstance, moved: Boolean): Boolean = {
+    val (removedWorldTiles, newWorldTiles) = worldTiles.partition(e => e._1 == pos && e._2 == tile)
+    worldTiles = newWorldTiles
+    removedWorldTiles.foreach(e => e._2.removedFromWorld(this, e._1, moved))
+    removedWorldTiles.nonEmpty
+  }
+
   def moveTo(pos: Vec2i, tile: TileInstance, newPos: Vec2i): Boolean =
-    remove(pos, tile).tap(if (_) add(newPos, tile))
+    remove(pos, tile, moved = true).tap(if (_) add(newPos, tile, moved = true))
 
   def move(pos: Vec2i, tile: TileInstance, f: Vec2i => Vec2i): Boolean =
     moveTo(pos, tile, f(pos))
@@ -52,17 +70,11 @@ class World private(size: Vec2i,
       add(pos, newTile)
     })
 
-  def remove(pos: Vec2i, tile: TileInstance): Boolean = {
-    val (removedWorldTiles, newWorldTiles) = worldTiles.partition(e => e._1 == pos && e._2 == tile)
-    worldTiles = newWorldTiles
-    removedWorldTiles.nonEmpty
-  }
-
   def playerMove(direction: Direction): Unit = {
     list(Player).foreach(e => e._2.move(this, e._1, direction))
   }
 
-  def render(canvas: Canvas): Unit = {
+  def render(canvas: Canvas, d: Double): Unit = {
     canvas.width = size.x * TileInstance.size.x
     canvas.height = size.y * TileInstance.size.y
 
@@ -72,15 +84,16 @@ class World private(size: Vec2i,
       y <- 0 until size.y
       x <- 0 until size.x
       pos = Vec2i(x, y)
+      renderPos = pos.map(_ * TileInstance.size.x, _ * TileInstance.size.y)
+      sortedTiles: Seq[TileInstance] = (Background +: get(pos)).sortBy(_.zIndex)
+      tile <- sortedTiles
     } {
-      val renderPos = pos.map(_ * TileInstance.size.x, _ * TileInstance.size.y)
-      val sortedTiles: Seq[TileInstance] = (Background +: get(pos)).sortBy(_.zIndex)
-      sortedTiles.foreach(e => e.render(ctx, this, renderPos))
+      tile.render(this, pos, ctx, d, renderPos)
     }
   }
 }
 
 object World {
-  def apply(size: Vec2i): World =
+  def empty(size: Vec2i): World =
     new World(size, Set.empty)
 }

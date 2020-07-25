@@ -33,6 +33,39 @@ trait TileInstance {
       false
   }
 
+  def zIndex: Int = pushable match {
+    case Pushable.Empty => 0
+    case Pushable.Solid => 1
+    case Pushable.Pushable | Pushable.Blocked => 2
+  }
+
+  def isEmpty: Boolean = false
+
+  def pushable: Pushable
+
+  def pushable(world: World,
+               pos: Vec2i,
+               direction: Direction,
+               by: TileInstance,
+               byPos: Vec2i): (Pushable, () => Unit) = pushable match {
+    case Pushable.Pushable =>
+      pushableSingle(world, pos, direction)
+
+    case pushable =>
+      pushable.withoutAction
+  }
+
+
+  protected final def pushableSingle(world: World,
+                                     pos: Vec2i,
+                                     direction: Direction): (Pushable, () => Unit) =
+    pushableIfAll(world, pos, direction, _.isEmpty)
+
+  protected final def pushableChain(world: World,
+                                    pos: Vec2i,
+                                    direction: Direction): (Pushable, () => Unit) =
+    pushableIfAll(world, pos, direction, _.isMovableTo)
+
   private final def pushableIfAll(world: World,
                                   pos: Vec2i,
                                   direction: Direction,
@@ -49,47 +82,22 @@ trait TileInstance {
       Pushable.Blocked.withoutAction
   }
 
-  protected final def pushableSingle(world: World,
-                                     pos: Vec2i,
-                                     direction: Direction): (Pushable, () => Unit) =
-    pushableIfAll(world, pos, direction, _.isEmpty)
-
-  protected final def pushableChain(world: World,
-                                    pos: Vec2i,
-                                    direction: Direction): (Pushable, () => Unit) =
-    pushableIfAll(world, pos, direction, _.isMovableTo)
-
-  def pushable: Pushable
-
-  def pushable(world: World,
-               pos: Vec2i,
-               direction: Direction,
-               by: TileInstance,
-               byPos: Vec2i): (Pushable, () => Unit) = pushable match {
-    case Pushable.Pushable =>
-      pushableSingle(world, pos, direction)
-
-    case pushable =>
-      pushable.withoutAction
-  }
-
-  def zIndex: Int = pushable match {
-    case Pushable.Empty => 0
-    case Pushable.Solid => 1
-    case Pushable.Pushable | Pushable.Blocked => 2
-  }
-
   def missionComplete(world: World, pos: Vec2i): Boolean = true
+
+  def addedToWorld(world: World, pos: Vec2i, moved: Boolean): Unit = ()
+
+  def removedFromWorld(world: World, pos: Vec2i, moved: Boolean): Unit = ()
 
   //def update(world: World, pos: Vec2i): Unit = ()
 
-  def render(ctx: dom.CanvasRenderingContext2D,
-             world: World,
-             pos: Vec2i): Unit = {
+  def render(world: World,
+             pos: Vec2i,
+             ctx: dom.CanvasRenderingContext2D,
+             d: Double,
+             renderPos: Vec2i): Unit = {
     val image = this.image(world, pos)
-    if (image.isReady) {
-      ctx.drawImage(image.element, pos.x, pos.y, image.element.width, image.element.height)
-    }
+    if (image.isReady)
+      ctx.drawImage(image.element, renderPos.x, renderPos.y, image.element.width, image.element.height)
   }
 }
 

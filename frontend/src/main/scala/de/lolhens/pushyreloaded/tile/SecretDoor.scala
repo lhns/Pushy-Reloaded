@@ -3,7 +3,7 @@ package de.lolhens.pushyreloaded.tile
 import de.lolhens.pushyreloaded._
 
 sealed trait SecretDoor extends SimpleTile[SecretDoor] {
-  override val id: Int = 12
+  override val id: Int = 14
 
   override def self: SecretDoor = this
 
@@ -12,7 +12,7 @@ sealed trait SecretDoor extends SimpleTile[SecretDoor] {
 
   private def buttonPressed(world: World): Boolean =
     world.list(Button).exists(e => world.get(e._1).exists { tile =>
-      tile.is(Player) || tile.pushable == Pushable.Pushable
+      /*tile.is(Player) ||*/ tile.pushable == Pushable.Pushable
     })
 
   override def image(world: World, pos: Vec2i): Image =
