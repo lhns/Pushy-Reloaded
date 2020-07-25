@@ -8,7 +8,7 @@ sealed trait Key extends SimpleTile[Key] {
 
   override def self: Key = this
 
-  override val image: Image = Image("/assets/images/33.bmp")
+  override val image: Image = defaultImageAsset()
 
   override val pushable: Pushable = Pushable.Empty
 

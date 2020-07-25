@@ -8,7 +8,7 @@ sealed trait FarMove extends SimpleTile[FarMove] {
 
   override def self: FarMove = this
 
-  override val image: Image = Image("/assets/images/35.bmp")
+  override val image: Image = defaultImageAsset()
 
   override val pushable: Pushable = Pushable.Empty
 

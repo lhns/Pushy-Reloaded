@@ -8,7 +8,7 @@ sealed trait Stamp extends SimpleTile[Stamp] {
 
   override def self: Stamp = this
 
-  override val image: Image = Image("/assets/images/11.bmp")
+  override val image: Image = defaultImageAsset()
 
   override val pushable: Pushable = Pushable.Empty
 

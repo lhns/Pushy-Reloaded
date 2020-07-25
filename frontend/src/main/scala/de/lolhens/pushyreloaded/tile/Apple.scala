@@ -7,7 +7,7 @@ sealed trait Apple extends SimpleTile[Apple] {
 
   override def self: Apple = this
 
-  override val image: Image = Image("/assets/images/21.bmp")
+  override val image: Image = defaultImageAsset()
 
   override val pushable: Pushable = Pushable.Solid
 

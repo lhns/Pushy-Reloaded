@@ -7,7 +7,7 @@ sealed trait Lock extends SimpleTile[Lock] {
 
   override def self: Lock = this
 
-  override val image: Image = Image("/assets/images/34.bmp")
+  override val image: Image = defaultImageAsset()
 
   override val pushable: Pushable = Pushable.Solid
 

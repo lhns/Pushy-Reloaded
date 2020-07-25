@@ -7,7 +7,7 @@ sealed trait Button extends SimpleTile[Button] {
 
   override def self: Button = this
 
-  override val image: Image = Image("/assets/images/13.bmp")
+  override val image: Image = defaultImageAsset()
 
   override val pushable: Pushable = Pushable.Empty
 

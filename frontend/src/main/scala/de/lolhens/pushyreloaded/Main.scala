@@ -23,6 +23,15 @@ object Main {
         case "Enter" => restart()
         case "n" => next()
         case "b" => prev()
+        case " " =>
+          world.list(Player).foreach {
+            case (pos, player) if player.attributes.get(Projectile.ProjectileAttribute) =>
+              world.remove(pos, ProjectileCarryAnimation)
+              player.changeAttributes(_.put(Projectile.ProjectileAttribute)(false))
+            // TODO: ProjectileThrowAnimation
+
+            case _ =>
+          }
         case key =>
           Option(key match {
             case "w" | "ArrowUp" => Direction.Up
@@ -69,6 +78,15 @@ object Main {
     add(Vec2i(5, 18), Lock)
     add(Vec2i(8, 16), ReverseMove)
     add(Vec2i(9, 16), FarMove)
+    add(Vec2i(12, 16), Projectile)
+    add(Vec2i(12, 17), ProjectileTarget)
+    add(Vec2i(14, 16), Transformer)
+    add(Vec2i(16, 16), Apple)
+    add(Vec2i(17, 16), Light(Light.State.New))
+    add(Vec2i(18, 16), Light(Light.State.New))
+    add(Vec2i(19, 16), Light(Light.State.New))
+    add(Vec2i(19, 15), Light(Light.State.New))
+    add(Vec2i(19, 14), Light(Light.State.New))
     add(size.map(_ - 2, _ - 2), House)
 
     world
@@ -113,10 +131,12 @@ object Main {
     loadCurrentLevel()
   }
 
-  def update(): Unit = ()
+  def update(d: Double): Unit = {
+    world.update(d)
+  }
 
-  def render(d: Double): Unit = {
-    world.render(canvas, d)
+  def render(): Unit = {
+    world.render(canvas)
   }
 
   def loop(): Unit = {
@@ -126,8 +146,8 @@ object Main {
       val now = js.Date.now()
       val delta = now - prev
 
-      update()
-      render(delta / 1000)
+      update(delta / 1000)
+      render()
 
       prev = now
     }

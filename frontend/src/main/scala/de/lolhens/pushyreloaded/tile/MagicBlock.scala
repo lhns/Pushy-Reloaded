@@ -9,7 +9,7 @@ sealed trait MagicBlock extends SimpleTile[MagicBlock] {
 
   override def self: MagicBlock = this
 
-  override val image: Image = Image("/assets/images/19.bmp")
+  override val image: Image = defaultImageAsset()
 
   override val pushable: Pushable = Pushable.Pushable
 
@@ -30,7 +30,7 @@ sealed trait MagicBlock extends SimpleTile[MagicBlock] {
 
   override def removedFromWorld(world: World, pos: Vec2i, moved: Boolean): Unit =
     if (!moved)
-      world.add(pos, MagicBlockVanishAnimation(0.4))
+      world.add(pos, MagicBlockVanishAnimation(0.2))
 }
 
 object MagicBlock extends MagicBlock

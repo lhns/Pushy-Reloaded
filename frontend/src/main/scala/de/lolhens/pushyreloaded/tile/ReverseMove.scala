@@ -8,7 +8,7 @@ sealed trait ReverseMove extends SimpleTile[ReverseMove] {
 
   override def self: ReverseMove = this
 
-  override val image: Image = Image("/assets/images/25.bmp")
+  override val image: Image = defaultImageAsset()
 
   override val pushable: Pushable = Pushable.Empty
 

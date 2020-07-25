@@ -15,6 +15,10 @@ trait TileInstance {
     case _ => None
   }
 
+  def id: Int
+
+  protected def defaultImageAsset(extension: String = "bmp"): Image = Image(s"/assets/images/$id.$extension")
+
   def image: Image
 
   def image(world: World, pos: Vec2i): Image = image
@@ -88,12 +92,11 @@ trait TileInstance {
 
   def removedFromWorld(world: World, pos: Vec2i, moved: Boolean): Unit = ()
 
-  //def update(world: World, pos: Vec2i): Unit = ()
+  def update(world: World, pos: Vec2i): Unit = ()
 
   def render(world: World,
              pos: Vec2i,
              ctx: dom.CanvasRenderingContext2D,
-             d: Double,
              renderPos: Vec2i): Unit = {
     val image = this.image(world, pos)
     if (image.isReady)

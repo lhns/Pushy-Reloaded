@@ -7,7 +7,7 @@ sealed trait Wall extends SimpleTile[Wall] {
 
   override def self: Wall = this
 
-  override val image: Image = Image("/assets/images/12.bmp")
+  override val image: Image = defaultImageAsset()
 
   override val pushable: Pushable = Pushable.Solid
 }

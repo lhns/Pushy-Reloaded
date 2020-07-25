@@ -24,6 +24,10 @@ class World private(size: Vec2i,
 
   final def flushChanges(): Unit = _changes = Map.empty
 
+  private var _time: Double = 0
+
+  def time: Double = _time
+
   def list: Seq[(Vec2i, TileInstance)] =
     worldTiles.toSeq
 
@@ -74,7 +78,12 @@ class World private(size: Vec2i,
     list(Player).foreach(e => e._2.move(this, e._1, direction))
   }
 
-  def render(canvas: Canvas, d: Double): Unit = {
+  def update(d: Double): Unit = {
+    _time += d
+    list.foreach(e => e._2.update(this, e._1))
+  }
+
+  def render(canvas: Canvas): Unit = {
     canvas.width = size.x * TileInstance.size.x
     canvas.height = size.y * TileInstance.size.y
 
@@ -88,7 +97,7 @@ class World private(size: Vec2i,
       sortedTiles: Seq[TileInstance] = (Background +: get(pos)).sortBy(_.zIndex)
       tile <- sortedTiles
     } {
-      tile.render(this, pos, ctx, d, renderPos)
+      tile.render(this, pos, ctx, renderPos)
     }
   }
 }

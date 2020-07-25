@@ -10,7 +10,11 @@ class Player private(var direction: Direction) extends TileInstance with Directi
 
   override def factory: TileFactory[Player] = Player
 
-  override def image: Image = Player.image
+  override val id: Int = Player.id
+
+  override def image: Image =
+    if (attributes.get(Transformer.ChargedAttribute)) Player.chargedImage
+    else Player.image
 
   override val zIndex: Int = 10
 
@@ -23,37 +27,44 @@ class Player private(var direction: Direction) extends TileInstance with Directi
 
     this.direction = newDirection
 
-    def moveStep(pos: Vec2i): Option[Vec2i] =
-      super.move(world, pos, newDirection).pipe(if (_) {
-        val offset = pos.offset(newDirection)
+    def moveStep(): Boolean =
+      world.list.find(_._2 == this).exists {
+        case (pos, _) =>
+          super.move(world, pos, newDirection).tap(if (_) {
+            val offset = pos.offset(newDirection)
 
-        if (attributes.get(Stamp.StampAttribute) && world.isEmpty(offset, except = _.is(Player)))
-          world.add(offset, Stamp)
+            if (attributes.get(Stamp.StampAttribute) && world.isEmpty(offset, except = _.is(Player)))
+              world.add(offset, Stamp)
+          })
+      }
 
-        Some(offset)
-      } else
-        None)
 
     if (attributes.get(FarMove.FarMoveAttribute))
-      moveStep(pos).tap {
-        case Some(newPos) => // TODO: might be teleported
-          var pos = newPos
-          while (moveStep(pos).map(pos = _).isDefined) ()
-      }.isDefined
+      moveStep().tap(if (_) {
+        while (moveStep()) ()
+      })
     else
-      moveStep(pos).isDefined
+      moveStep()
   }
+
+  override def addedToWorld(world: World, pos: Vec2i, moved: Boolean): Unit =
+    if (attributes.get(Projectile.ProjectileAttribute))
+      world.add(pos, ProjectileCarryAnimation)
+
+  override def removedFromWorld(world: World, pos: Vec2i, moved: Boolean): Unit =
+    if (attributes.get(Projectile.ProjectileAttribute))
+      world.remove(pos, ProjectileCarryAnimation)
 }
 
 object Player extends TileFactory[Player] {
   def apply(direction: Direction): Player = new Player(direction)
 
-  private val image: Image = Image("/assets/images/10.png")
+  val id: Int = 10
+
+  private val image: Image = Image(s"/assets/images/$id.png")
+  private val chargedImage: Image = Image("/assets/images/124.png")
 
   override def variants: Seq[Player] = Seq()
 
-  override val ids: List[Int] = List(10)
-
-  override def fromId(id: Int): Player = Player(Direction.Up)
-
+  override def fromId(id: Int): Option[Player] = Option.when(id == this.id)(Player(Direction.Up))
 }

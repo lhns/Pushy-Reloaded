@@ -7,7 +7,13 @@ case class BallHole private(color: Ball.Color) extends TileInstance {
 
   override def factory: TileFactory[BallHole] = BallHole
 
-  override lazy val image: Image = Image(s"/assets/images/${color.index + 4}.bmp")
+  override lazy val id: Int = color match {
+    case _ if color.index <= Ball.Color.Green.index => color.index + 4
+    case Ball.Color.Gray => 101
+    case Ball.Color.Yellow => 114
+  }
+
+  override lazy val image: Image = defaultImageAsset()
 
   override val pushable: Pushable = Pushable.Solid
 
@@ -30,12 +36,4 @@ object BallHole extends TileFactory[BallHole] {
   def apply(color: Ball.Color): BallHole = cached(new BallHole(color))
 
   override val variants: Seq[BallHole] = Ball.Color.values.map(new BallHole(_))
-
-  override val ids: List[Int] = List(4, 5, 6)
-
-  override def fromId(id: Int): BallHole = BallHole(id match {
-    case 4 => Ball.Color.Red
-    case 5 => Ball.Color.Blue
-    case 6 => Ball.Color.Green
-  })
 }

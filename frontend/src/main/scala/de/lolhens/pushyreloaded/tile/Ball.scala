@@ -9,7 +9,13 @@ case class Ball private(color: Ball.Color) extends TileInstance {
 
   def withColor(color: Ball.Color): Ball = Ball(color)
 
-  override lazy val image: Image = Image(s"/assets/images/${color.index + 1}.png")
+  override lazy val id: Int = color match {
+    case _ if color.index <= Ball.Color.Green.index => color.index + 1
+    case Ball.Color.Gray => 100
+    case Ball.Color.Yellow => 113
+  }
+
+  override lazy val image: Image = defaultImageAsset(extension = "png")
 
   override def pushable: Pushable = Pushable.Pushable
 
@@ -31,14 +37,10 @@ object Ball extends TileFactory[Ball] {
 
     case object Green extends Color(2)
 
+    case object Yellow extends Color(3)
+
+    case object Gray extends Color(4)
+
     val values: List[Color] = List(Red, Blue, Green)
   }
-
-  override val ids: List[Int] = List(1, 2, 3)
-
-  override def fromId(id: Int): Ball = Ball(id match {
-    case 1 => Color.Red
-    case 2 => Color.Blue
-    case 3 => Color.Green
-  })
 }

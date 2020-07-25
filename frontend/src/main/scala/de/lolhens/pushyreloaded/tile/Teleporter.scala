@@ -9,7 +9,7 @@ sealed trait Teleporter extends SimpleTile[Teleporter] {
 
   override def self: Teleporter = this
 
-  override val image: Image = Image("/assets/images/8.bmp")
+  override val image: Image = defaultImageAsset()
 
   override val pushable: Pushable = Pushable.Empty
 

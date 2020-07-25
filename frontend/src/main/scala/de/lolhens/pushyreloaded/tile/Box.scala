@@ -7,7 +7,7 @@ sealed trait Box extends SimpleTile[Box] {
 
   override def self: Box = this
 
-  override val image: Image = Image("/assets/images/9.bmp")
+  override val image: Image = defaultImageAsset()
 
   override val pushable: Pushable = Pushable.Pushable
 }

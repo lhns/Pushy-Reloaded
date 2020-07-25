@@ -1,19 +1,13 @@
 package de.lolhens.pushyreloaded.tile
 
-import de.lolhens.pushyreloaded.{Image, Pushable}
+import de.lolhens.pushyreloaded.Image
 
-sealed trait Background extends SimpleTile[Background] {
-  override val id: Int = 0
-
+sealed trait Background extends SimpleTile[Background] with VisualInstance {
   override def self: Background = this
 
-  override val image: Image = Image("/assets/images/0.bmp")
+  override val image: Image = defaultImageAsset()
 
   override val zIndex: Int = Int.MinValue
-
-  override val pushable: Pushable = Pushable.Empty
-
-  override val isEmpty: Boolean = true
 }
 
 object Background extends Background

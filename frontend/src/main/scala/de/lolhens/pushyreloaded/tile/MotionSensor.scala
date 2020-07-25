@@ -10,6 +10,10 @@ case class MotionSensor private(state: MotionSensor.State) extends TileInstance 
 
   def withState(state: MotionSensor.State): MotionSensor = MotionSensor(state)
 
+  override lazy val id: Int =
+    if (state == State.Closed) 23
+    else 20
+
   override lazy val image: Image = state match {
     case State.Inactive => Image("/assets/images/20.bmp")
     case State.Active => Image("/assets/images/109.bmp")
@@ -70,10 +74,6 @@ object MotionSensor extends TileFactory[MotionSensor] {
     val values: List[State] = List(Inactive, Active, Closed)
   }
 
-  override val ids: List[Int] = List(20, 23)
-
-  override def fromId(id: Int): MotionSensor = id match {
-    case 20 => MotionSensor(State.Inactive)
-    case 23 => MotionSensor(State.Closed)
-  }
+  override def fromId(id: Int): Option[MotionSensor] =
+    Seq(MotionSensor(State.Inactive), MotionSensor(State.Closed)).find(_.id == id)
 }

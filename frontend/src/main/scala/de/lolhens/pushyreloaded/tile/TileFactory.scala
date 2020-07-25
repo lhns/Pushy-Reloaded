@@ -8,9 +8,7 @@ trait TileFactory[+Instance <: TileInstance] {
   final protected def cached[A >: Instance](instance: A): A =
     variants.find(_ == instance).getOrElse(instance)
 
-  val ids: List[Int]
-
-  def fromId(id: Int): Instance
+  def fromId(id: Int): Option[Instance] = variants.find(_.id == id)
 }
 
 object TileFactory {
@@ -30,9 +28,17 @@ object TileFactory {
     BoxTarget,
     MagicBlock,
     MotionSensor,
-    Apple
+    Apple,
+    ReverseMove,
+    Projectile,
+    Transformer,
+    ProjectileTarget,
+    Light,
+    Key,
+    Lock,
+    FarMove
   )
 
   def fromId(id: Int): Option[TileInstance] =
-    tiles.find(_.ids.contains(id)).map(_.fromId(id))
+    tiles.collectFirst(Function.unlift(_.fromId(id)))
 }
