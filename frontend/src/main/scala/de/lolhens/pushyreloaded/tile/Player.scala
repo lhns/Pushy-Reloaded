@@ -17,12 +17,31 @@ class Player private(var direction: Direction) extends TileInstance with Directi
   override val pushable: Pushable = Pushable.Solid
 
   override def move(world: World, pos: Vec2i, direction: Direction): Boolean = {
-    this.direction = direction
-    super.move(world, pos, direction).tap(if (_) {
-      val offset = pos.offset(direction)
-      if (attributes.get(Stamp.StampAttribute) && world.isEmpty(offset, except = _.is(Player)))
-        world.add(offset, Stamp)
-    })
+    val newDirection =
+      if (attributes.get(ReverseMove.ReverseMoveAttribute)) direction.opposite
+      else direction
+
+    this.direction = newDirection
+
+    def moveStep(pos: Vec2i): Option[Vec2i] =
+      super.move(world, pos, newDirection).pipe(if (_) {
+        val offset = pos.offset(newDirection)
+
+        if (attributes.get(Stamp.StampAttribute) && world.isEmpty(offset, except = _.is(Player)))
+          world.add(offset, Stamp)
+
+        Some(offset)
+      } else
+        None)
+
+    if (attributes.get(FarMove.FarMoveAttribute))
+      moveStep(pos).tap {
+        case Some(newPos) => // TODO: might be teleported
+          var pos = newPos
+          while (moveStep(pos).map(pos = _).isDefined) ()
+      }.isDefined
+    else
+      moveStep(pos).isDefined
   }
 }
 

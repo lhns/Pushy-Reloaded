@@ -67,6 +67,8 @@ object Main {
     add(Vec2i(5, 16), Key)
     add(Vec2i(5, 17), Lock)
     add(Vec2i(5, 18), Lock)
+    add(Vec2i(8, 16), ReverseMove)
+    add(Vec2i(9, 16), FarMove)
     add(size.map(_ - 2, _ - 2), House)
 
     world
