@@ -10,7 +10,7 @@ class Player private(private var _direction: Direction) extends TileInstance wit
 
   override def factory: TileFactory[Player] = Player
 
-  def direction: Direction = _direction
+  override def direction: Direction = _direction
 
   private def setDirection(direction: Direction): Unit = _direction = direction
 
@@ -68,7 +68,7 @@ object Player extends TileFactory[Player] {
   private val image: Image = Image(s"/assets/images/$id.png")
   private val chargedImage: Image = Image("/assets/images/124.png")
 
-  override def variants: Seq[Player] = Seq()
+  override val variants: Seq[Player] = Seq()
 
   override def fromId(id: Int): Option[Player] = Option.when(id == this.id)(Player(Direction.Up))
 }

@@ -5,7 +5,7 @@ sealed trait Direction {
 
   def horizontal: Boolean
 
-  val degrees: Int
+  def degrees: Int
 }
 
 object Direction {
@@ -15,7 +15,7 @@ object Direction {
 
     override def horizontal: Boolean = true
 
-    override val degrees: Int = 270
+    override def degrees: Int = 270
   }
 
   case object Up extends Direction {
@@ -23,7 +23,7 @@ object Direction {
 
     override def horizontal: Boolean = false
 
-    override val degrees: Int = 0
+    override def degrees: Int = 0
   }
 
   case object Right extends Direction {
@@ -31,7 +31,7 @@ object Direction {
 
     override def horizontal: Boolean = true
 
-    override val degrees: Int = 90
+    override def degrees: Int = 90
   }
 
   case object Down extends Direction {
@@ -39,7 +39,7 @@ object Direction {
 
     override def horizontal: Boolean = false
 
-    override val degrees: Int = 180
+    override def degrees: Int = 180
   }
 
   val values: List[Direction] = List(Left, Up, Right, Down)

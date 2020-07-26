@@ -7,6 +7,7 @@ import org.scalajs.dom
 import org.scalajs.dom.html.Canvas
 
 import scala.scalajs.js
+import scala.scalajs.js.annotation.JSExportTopLevel
 import scala.scalajs.js.typedarray.{ArrayBuffer, Uint8Array}
 
 object Main {
@@ -89,6 +90,8 @@ object Main {
     add(Vec2i(19, 16), Light(Light.State.New))
     add(Vec2i(19, 15), Light(Light.State.New))
     add(Vec2i(19, 14), Light(Light.State.New))
+    add(Vec2i(5, 13), ShadowPlayer(Direction.Up))
+    //add(Vec2i(5, 13), Player(Direction.Up))
     add(size.map(_ - 2, _ - 2), House)
 
     world
@@ -123,6 +126,12 @@ object Main {
 
   def restart(): Unit =
     loadCurrentLevel()
+
+  @JSExportTopLevel("setLevel")
+  def setLevel(level: Int): Unit = {
+    currentLevel = level
+    loadCurrentLevel()
+  }
 
   def next(): Unit = {
     currentLevel += 1

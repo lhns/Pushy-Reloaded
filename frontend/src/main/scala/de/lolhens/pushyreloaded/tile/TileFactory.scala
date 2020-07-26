@@ -42,7 +42,8 @@ object TileFactory {
     Lock,
     FarMove,
     ColorChanger,
-    ColorChangerTarget
+    ColorChangerTarget,
+    ShadowPlayer
   )
 
   val loadedImages: Seq[Image] = tiles.flatMap(_.variants).map(_.image)
