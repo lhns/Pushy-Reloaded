@@ -37,4 +37,5 @@ object BallInk extends TileFactory[BallInk] {
   def apply(color: Ball.Color): BallInk = cached(new BallInk(color))
 
   override val variants: Seq[BallInk] = Ball.Color.values.map(new BallInk(_))
+  override val idVariants: Seq[BallInk] = Ball.Color.idValues.map(new BallInk(_))
 }

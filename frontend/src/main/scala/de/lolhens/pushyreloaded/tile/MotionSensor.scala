@@ -60,6 +60,7 @@ object MotionSensor extends TileFactory[MotionSensor] {
   def apply(state: MotionSensor.State): MotionSensor = cached(new MotionSensor(state))
 
   override val variants: Seq[MotionSensor] = State.values.map(new MotionSensor(_))
+  override val idVariants: Seq[MotionSensor] = State.idValues.map(new MotionSensor(_))
 
   sealed abstract class State(val index: Int)
 
@@ -72,8 +73,7 @@ object MotionSensor extends TileFactory[MotionSensor] {
     case object Closed extends State(2)
 
     val values: List[State] = List(Inactive, Active, Closed)
+    val idValues: List[State] = List(Inactive, Closed)
   }
 
-  override def fromId(id: Int): Option[MotionSensor] =
-    Seq(MotionSensor(State.Inactive), MotionSensor(State.Closed)).find(_.id == id)
 }

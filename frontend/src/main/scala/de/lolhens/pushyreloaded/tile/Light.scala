@@ -96,6 +96,7 @@ object Light extends TileFactory[Light] {
   def apply(state: Light.State): Light = cached(new Light(state))
 
   override val variants: Seq[Light] = State.values.map(new Light(_))
+  override val idVariants: Seq[Light] = State.idValues.map(new Light(_))
 
   val updateInterval: Double = 1
 
@@ -137,7 +138,8 @@ object Light extends TileFactory[Light] {
       override def off: State = Off
     }
 
-    val values: List[State] = List(New, Off, On(None))
+    val values: List[State] = List(New, Off, On(None), Blinking) ++ Direction.values.map(e => On(Some(e)))
+    val idValues: List[State] = List(New, Off, On(None))
   }
 
 }

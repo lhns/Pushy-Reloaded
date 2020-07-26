@@ -14,4 +14,6 @@ trait VisualInstance extends TileInstance {
 
 trait VisualFactory[+Instance <: TileInstance] extends TileFactory[Instance] {
   override def variants: Seq[Instance] = List()
+
+  override def idVariants: Seq[Instance] = List()
 }

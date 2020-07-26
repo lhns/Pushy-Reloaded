@@ -28,7 +28,7 @@ object Main {
             case (pos, player) if player.attributes.get(Projectile.ProjectileAttribute) =>
               world.remove(pos, ProjectileCarryAnimation)
               player.changeAttributes(_.put(Projectile.ProjectileAttribute)(false))
-            // TODO: ProjectileThrowAnimation
+              world.add(pos, ProjectileThrowAnimation(player.direction))
 
             case _ =>
           }
@@ -61,7 +61,7 @@ object Main {
     add(Vec2i(6, 1), Stamp)
     add(Vec2i(2, 2), Ball(Ball.Color.Red))
     add(Vec2i(3, 2), Ball(Ball.Color.Green))
-    add(Vec2i(5, 4), BallHole(Ball.Color.Red))
+    add(Vec2i(5, 4), BallTarget(Ball.Color.Red))
     add(Vec2i(7, 4), BallInk(Ball.Color.Red))
     add(Vec2i(8, 6), Box)
     add(Vec2i(10, 6), BoxTarget)
@@ -81,6 +81,8 @@ object Main {
     add(Vec2i(12, 16), Projectile)
     add(Vec2i(12, 17), ProjectileTarget)
     add(Vec2i(14, 16), Transformer)
+    add(Vec2i(3, 16), ColorChanger(ColorChanger.Color.Red))
+    add(Vec2i(5, 10), ColorChangerTarget(ColorChanger.Color.Red))
     add(Vec2i(16, 16), Apple)
     add(Vec2i(17, 16), Light(Light.State.New))
     add(Vec2i(18, 16), Light(Light.State.New))
@@ -110,6 +112,7 @@ object Main {
   }
 
   private def loadCurrentLevel(): Unit = {
+    println(s"current level: $currentLevel")
     if (currentLevel == 0) world = testWorld
     else
       request(s"/assets/level/$currentLevel.lev", { bytes =>

@@ -28,6 +28,9 @@ class World private(size: Vec2i,
 
   def time: Double = _time
 
+  def inside(pos: Vec2i): Boolean =
+    pos.x >= 0 && pos.y >= 0 && pos.x < size.x && pos.y < size.y
+
   def list: Seq[(Vec2i, TileInstance)] =
     worldTiles.toSeq
 
@@ -89,15 +92,19 @@ class World private(size: Vec2i,
 
     val ctx = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
 
-    for {
-      y <- 0 until size.y
-      x <- 0 until size.x
-      pos = Vec2i(x, y)
-      renderPos = pos.map(_ * TileInstance.size.x, _ * TileInstance.size.y)
-      sortedTiles: Seq[TileInstance] = (Background +: get(pos)).sortBy(_.zIndex)
-      tile <- sortedTiles
-    } {
-      tile.render(this, pos, ctx, renderPos)
+    val tiles =
+      for {
+        y <- 0 until size.y
+        x <- 0 until size.x
+        pos = Vec2i(x, y)
+        tile <- Background +: get(pos)
+      } yield
+        (pos, tile)
+
+    tiles.sortBy(_._2.zIndex).foreach {
+      case (pos, tile) =>
+        val renderPos = pos.map(_ * TileInstance.size.x, _ * TileInstance.size.y)
+        tile.render(this, pos, ctx, renderPos)
     }
   }
 }

@@ -1,18 +1,19 @@
 package de.lolhens.pushyreloaded.tile
 
+import de.lolhens.pushyreloaded.tile.Ball.Color
 import de.lolhens.pushyreloaded.{Image, Pushable, Vec2i, World}
 
-case class Ball private(color: Ball.Color) extends TileInstance {
+case class Ball private(color: Color) extends TileInstance {
   override type Self = Ball
 
   override def factory: TileFactory[Ball] = Ball
 
-  def withColor(color: Ball.Color): Ball = Ball(color)
+  def withColor(color: Color): Ball = Ball(color)
 
   override lazy val id: Int = color match {
-    case _ if color.index <= Ball.Color.Green.index => color.index + 1
-    case Ball.Color.Gray => 100
-    case Ball.Color.Yellow => 113
+    case _ if color.index <= Color.Green.index => color.index + 1
+    case Color.Gray => 100
+    case Color.Yellow => 113
   }
 
   override lazy val image: Image = defaultImageAsset(extension = "png")
@@ -23,9 +24,10 @@ case class Ball private(color: Ball.Color) extends TileInstance {
 }
 
 object Ball extends TileFactory[Ball] {
-  def apply(color: Ball.Color): Ball = cached(new Ball(color))
+  def apply(color: Color): Ball = cached(new Ball(color))
 
   override val variants: Seq[Ball] = Color.values.map(new Ball(_))
+  override val idVariants: Seq[Ball] = Color.idValues.map(new Ball(_))
 
   sealed abstract class Color(val index: Int)
 
@@ -41,6 +43,7 @@ object Ball extends TileFactory[Ball] {
 
     case object Gray extends Color(4)
 
-    val values: List[Color] = List(Red, Blue, Green)
+    val values: List[Color] = List(Red, Blue, Green, Yellow, Gray)
+    val idValues: List[Color] = List(Red, Blue, Green)
   }
 }

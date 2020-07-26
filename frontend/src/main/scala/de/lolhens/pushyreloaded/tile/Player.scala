@@ -5,10 +5,14 @@ import de.lolhens.pushyreloaded._
 
 import scala.util.chaining._
 
-class Player private(var direction: Direction) extends TileInstance with Directional with WithAttributes {
+class Player private(private var _direction: Direction) extends TileInstance with Directional with WithAttributes {
   override type Self = Player
 
   override def factory: TileFactory[Player] = Player
+
+  def direction: Direction = _direction
+
+  private def setDirection(direction: Direction): Unit = _direction = direction
 
   override val id: Int = Player.id
 
@@ -25,7 +29,7 @@ class Player private(var direction: Direction) extends TileInstance with Directi
       if (attributes.get(ReverseMove.ReverseMoveAttribute)) direction.opposite
       else direction
 
-    this.direction = newDirection
+    this.setDirection(newDirection)
 
     def moveStep(): Boolean =
       world.list.find(_._2 == this).exists {

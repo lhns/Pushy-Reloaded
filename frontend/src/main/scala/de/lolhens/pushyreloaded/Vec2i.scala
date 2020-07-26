@@ -7,6 +7,10 @@ case class Vec2i(x: Int, y: Int) {
 
   def map(x: Int => Int, y: Int => Int): Vec2i = Vec2i(x(this.x), y(this.y))
 
+  def mapX(x: Int => Int): Vec2i = Vec2i(x(this.x), y)
+
+  def mapY(y: Int => Int): Vec2i = Vec2i(x, y(this.y))
+
   def offset(offset: Vec2i): Vec2i = Vec2i(x + offset.x, y + offset.y)
 
   def offset(direction: Direction): Vec2i = direction match {
