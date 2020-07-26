@@ -1,6 +1,6 @@
 package de.lolhens.pushyreloaded.tile
 
-import de.lolhens.pushyreloaded.{Image, Vec2i, World}
+import de.lolhens.pushyreloaded.{Image, Resource, Vec2i, World}
 import org.scalajs.dom.CanvasRenderingContext2D
 
 class MotionSensorAnimation private() extends VisualInstance with RenderRotated {
@@ -17,5 +17,5 @@ class MotionSensorAnimation private() extends VisualInstance with RenderRotated 
 object MotionSensorAnimation extends VisualFactory[MotionSensorAnimation] {
   def apply(): MotionSensorAnimation = new MotionSensorAnimation()
 
-  private val image: Image = Image("/assets/images/108.png")
+  private val image: Image = Resource.image("108.png")
 }

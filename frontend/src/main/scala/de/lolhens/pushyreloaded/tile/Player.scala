@@ -65,8 +65,8 @@ object Player extends TileFactory[Player] {
 
   val id: Int = 10
 
-  private val image: Image = Image(s"/assets/images/$id.png")
-  private val chargedImage: Image = Image("/assets/images/124.png")
+  private val image: Image = Resource.image(s"$id.png")
+  private val chargedImage: Image = Resource.image("124.png")
 
   override val variants: Seq[Player] = Seq()
 

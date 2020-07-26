@@ -40,7 +40,7 @@ object Server extends TaskApp {
   lazy val blocker: Blocker = Blocker.liftExecutionContext(resourceScheduler)
 
   def webjarUri(asset: WebjarAsset) =
-    s"/assets/${asset.library}/${asset.version}/${asset.asset}"
+    s"assets/${asset.library}/${asset.version}/${asset.asset}"
 
   lazy val service: HttpRoutes[Task] = Router(
     "/assets" -> {

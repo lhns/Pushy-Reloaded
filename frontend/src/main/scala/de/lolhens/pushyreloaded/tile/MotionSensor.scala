@@ -15,9 +15,9 @@ case class MotionSensor private(state: MotionSensor.State) extends TileInstance 
     else 20
 
   override lazy val image: Image = state match {
-    case State.Inactive => Image("/assets/images/20.bmp")
-    case State.Active => Image("/assets/images/109.bmp")
-    case State.Closed => Image("/assets/images/23.bmp")
+    case State.Inactive => Resource.image("20.bmp")
+    case State.Active => Resource.image("109.bmp")
+    case State.Closed => Resource.image("23.bmp")
   }
 
   override val pushable: Pushable = Pushable.Solid

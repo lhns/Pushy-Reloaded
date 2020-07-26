@@ -8,7 +8,7 @@ sealed trait SecretDoor extends SimpleTile[SecretDoor] {
   override def self: SecretDoor = this
 
   override val image: Image = defaultImageAsset()
-  val imageOpen: Image = Image("/assets/images/103.bmp")
+  val imageOpen: Image = Resource.image("103.bmp")
 
   private def buttonPressed(world: World): Boolean =
     world.list(Button).exists(e => world.get(e._1).exists { tile =>

@@ -36,7 +36,7 @@ object ShadowPlayer extends TileFactory[ShadowPlayer] {
 
   val id: Int = 40
 
-  private val image: Image = Image(s"/assets/images/$id.png")
+  private val image: Image = Resource.image(s"$id.png")
 
   override val variants: Seq[ShadowPlayer] = Seq()
 

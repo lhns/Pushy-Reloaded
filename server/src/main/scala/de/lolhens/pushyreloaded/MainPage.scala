@@ -16,8 +16,9 @@ object MainPage {
     html(style := "height: 100%;", lang := "de",
       head(
         meta(charset := "UTF-8"),
+        base(href := "/"),
         tag("title")("Pushy Reloaded"),
-        link(rel := "icon", `type` := "image/png", href := "/assets/images/10.png", attr("sizes") := "32x32"),
+        link(rel := "icon", `type` := "image/png", href := "assets/images/10.png", attr("sizes") := "32x32"),
       ),
       body(style := "height: 100%; margin: 0;",
         div(style := "height: 100%; display: flex; flex-direction: column; overflow: hidden;",

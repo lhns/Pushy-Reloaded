@@ -17,7 +17,7 @@ trait TileInstance {
 
   def id: Int
 
-  protected def defaultImageAsset(extension: String = "bmp"): Image = Image(s"/assets/images/$id.$extension")
+  protected def defaultImageAsset(extension: String = "bmp"): Image = Resource.image(s"$id.$extension")
 
   def image: Image
 
