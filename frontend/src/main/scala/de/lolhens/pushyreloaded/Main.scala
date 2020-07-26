@@ -6,6 +6,7 @@ import org.scalajs.dom.html.Canvas
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.util.chaining._
 
 object Main {
   private val canvas = dom.document.getElementById("canvas").asInstanceOf[Canvas]
@@ -43,6 +44,39 @@ object Main {
 
     loop()
   }
+
+  dom.window.addEventListener("touchend", (e: dom.TouchEvent) => {
+    if (dom.document.elementFromPoint(
+      e.changedTouches(0).pageX,
+      e.changedTouches(0).pageY
+    ).id != "restart") {
+      e.preventDefault()
+      val (x, y) = e.changedTouches(0).pipe(e => (e.clientX, e.clientY))
+      val (width, height) = dom.window.document.body.pipe(e => (e.clientWidth, e.clientHeight))
+      val (relX, relY) = (x / width, y / height)
+      if (relY <= 0.5) {
+        if (relX <= relY) {
+          world.playerMove(Direction.Left)
+        } else if (relX >= 1 - relY) {
+          world.playerMove(Direction.Right)
+        } else {
+          world.playerMove(Direction.Up)
+        }
+      } else {
+        if (relX <= 1 - relY) {
+          world.playerMove(Direction.Left)
+        } else if (relX >= relY) {
+          world.playerMove(Direction.Right)
+        } else {
+          world.playerMove(Direction.Down)
+        }
+      }
+    }
+  })
+
+  dom.document.getElementById("restart").addEventListener("click", (e: dom.Event) => {
+    restart()
+  })
 
   def testWorld: World = {
     val size = Vec2i(30, 20)
