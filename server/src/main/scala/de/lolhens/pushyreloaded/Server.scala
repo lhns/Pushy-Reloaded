@@ -44,8 +44,8 @@ object Server extends TaskApp {
 
   lazy val service: HttpRoutes[Task] = Router(
     "/assets" -> {
-      WebjarService2[Task](WebjarService.Config(blocker)) <+>
-        ResourceService2[Task](ResourceService.Config("/assets", blocker))
+      webjarService[Task](WebjarService.Config(blocker)) <+>
+        resourceService[Task](ResourceService.Config("/assets", blocker))
     },
 
     "/" -> {

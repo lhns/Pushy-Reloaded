@@ -35,10 +35,10 @@ lazy val server = project
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % "1.2.3",
       "io.monix" %% "monix" % "3.2.2",
-      "org.http4s" %% "http4s-blaze-server" % "0.21.5",
-      "org.http4s" %% "http4s-circe" % "0.21.5",
-      "org.http4s" %% "http4s-dsl" % "0.21.5",
-      "org.http4s" %% "http4s-scalatags" % "0.21.5",
+      "org.http4s" %% "http4s-blaze-server" % "0.21.7",
+      "org.http4s" %% "http4s-circe" % "0.21.7",
+      "org.http4s" %% "http4s-dsl" % "0.21.7",
+      "org.http4s" %% "http4s-scalatags" % "0.21.7",
     ),
 
     buildInfoKeys := Seq(
