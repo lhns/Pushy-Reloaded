@@ -20,6 +20,7 @@ lazy val frontend = project
   .settings(
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "cats-core" % "2.1.1",
+      "io.monix" %%% "monix" % "3.2.2",
       "org.scala-js" %%% "scalajs-dom" % "1.0.0",
     ),
 

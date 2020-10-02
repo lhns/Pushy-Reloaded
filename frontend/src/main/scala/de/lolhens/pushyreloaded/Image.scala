@@ -7,7 +7,7 @@ case class Image(src: String) {
   private var ready: Boolean = false
 
   val element: HTMLImageElement = dom.document.createElement("img").asInstanceOf[HTMLImageElement]
-  element.onload = (e: dom.Event) => ready = true
+  element.onload = (_: dom.Event) => ready = true
   element.src = src
 
   def isReady: Boolean = ready

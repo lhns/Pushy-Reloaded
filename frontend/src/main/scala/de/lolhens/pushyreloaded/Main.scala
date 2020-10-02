@@ -1,6 +1,7 @@
 package de.lolhens.pushyreloaded
 
 import de.lolhens.pushyreloaded.tile._
+import monix.execution.Scheduler.Implicits.global
 import org.scalajs.dom
 import org.scalajs.dom.html.Canvas
 
@@ -132,7 +133,7 @@ object Main {
   private def loadCurrentLevel(): Unit = {
     println(s"current level: $currentLevel")
     if (currentLevel == 0) world = testWorld
-    else Resource.level(s"$currentLevel.lev", world = _)
+    else Resource.level(s"$currentLevel.lev").foreach(world = _)
   }
 
   def restart(): Unit =
