@@ -9,7 +9,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  build:
 
     runs-on: ubuntu-latest
 
@@ -23,4 +23,4 @@ jobs:
         run: sbt "; test; frontend/fullLinkJS"
       - uses: actions/upload-artifact@v2
         with:
-          path: 'frontend/.webjar/target/scala-*/classes/META-INF/resources/webjars/pushy-reloaded/*/*'
+          path: 'frontend/target/scala-*/pushy-reloaded-opt/*'
