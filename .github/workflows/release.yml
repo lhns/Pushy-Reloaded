@@ -1,4 +1,4 @@
-name: publish
+name: release
 
 on:
   release:
@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Publish
+      - name: Build
         env:
           CI_VERSION: ${{ github.ref }}
         run: sbt "; test; frontend/fullLinkJS"
