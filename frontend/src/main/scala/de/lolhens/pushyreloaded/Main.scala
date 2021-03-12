@@ -3,17 +3,28 @@ package de.lolhens.pushyreloaded
 import de.lolhens.pushyreloaded.tile._
 import monix.execution.Scheduler.Implicits.global
 import org.scalajs.dom
+import org.scalajs.dom.experimental.URL
 import org.scalajs.dom.html.Canvas
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.util.Try
 import scala.util.chaining._
 
 object Main {
   private val canvas = dom.document.getElementById("canvas").asInstanceOf[Canvas]
   var world: World = World.empty(Vec2i(20, 12))
 
-  var currentLevel: Int = 1
+  private var _currentLevel: Int = {
+    Try(new URL(dom.window.location.href).searchParams.get("level").toInt).getOrElse(1)
+  }
+
+  def currentLevel: Int = _currentLevel
+
+  def currentLevel_=(level: Int): Unit = {
+    _currentLevel = level
+    dom.window.history.replaceState(null, null, s"?level=$level")
+  }
 
   def main(args: Array[String]): Unit = {
     loadCurrentLevel()
