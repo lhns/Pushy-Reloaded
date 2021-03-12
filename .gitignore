@@ -28,6 +28,7 @@ projectFilesBackup*/
 .worksheet
 
 #SBT
+.bsp/
 .cache/
 .history/
 .lib/

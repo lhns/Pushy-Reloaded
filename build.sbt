@@ -2,7 +2,7 @@ lazy val commonSettings: Seq[Setting[_]] = Seq(
   name := "Pushy-Reloaded",
   version := "2.0.1-SNAPSHOT",
 
-  scalaVersion := "2.13.3",
+  scalaVersion := "2.13.5",
 
   addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
 )
@@ -19,9 +19,9 @@ lazy val frontend = project
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "org.typelevel" %%% "cats-core" % "2.1.1",
-      "io.monix" %%% "monix" % "3.2.2",
-      "org.scala-js" %%% "scalajs-dom" % "1.0.0",
+      "org.typelevel" %%% "cats-core" % "2.4.2",
+      "io.monix" %%% "monix" % "3.3.0",
+      "org.scala-js" %%% "scalajs-dom" % "1.1.0",
     ),
 
     scalaJSLinkerConfig := scalaJSLinkerConfig.value.withESFeatures(_.withUseECMAScript2015(false)),
@@ -35,11 +35,11 @@ lazy val server = project
   .settings(
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % "1.2.3",
-      "io.monix" %% "monix" % "3.2.2",
-      "org.http4s" %% "http4s-blaze-server" % "0.21.7",
-      "org.http4s" %% "http4s-circe" % "0.21.7",
-      "org.http4s" %% "http4s-dsl" % "0.21.7",
-      "org.http4s" %% "http4s-scalatags" % "0.21.7",
+      "io.monix" %% "monix" % "3.3.0",
+      "org.http4s" %% "http4s-blaze-server" % "0.21.20",
+      "org.http4s" %% "http4s-circe" % "0.21.20",
+      "org.http4s" %% "http4s-dsl" % "0.21.20",
+      "org.http4s" %% "http4s-scalatags" % "0.21.20",
     ),
 
     buildInfoKeys := Seq(

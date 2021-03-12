@@ -10,19 +10,19 @@ sealed trait SecretDoor extends SimpleTile[SecretDoor] {
   override val image: Image = defaultImageAsset()
   val imageOpen: Image = Resource.image("103.bmp")
 
-  private def buttonPressed(world: World): Boolean =
-    world.list(Button).exists(e => world.get(e._1).exists { tile =>
+  private def isOpen(world: World, pos: Vec2i): Boolean =
+    (world.get(pos) ++ world.list(Button).flatMap(e => world.get(e._1))).exists { tile =>
       tile.pushable == Pushable.Pushable
-    })
+    }
 
   override def image(world: World, pos: Vec2i): Image =
-    if (buttonPressed(world)) imageOpen
+    if (isOpen(world, pos)) imageOpen
     else image
 
   override val pushable: Pushable = Pushable.Empty
 
   override def pushable(world: World, pos: Vec2i, direction: Direction, by: TileInstance, byPos: Vec2i): (Pushable, () => Unit) =
-    if (buttonPressed(world)) super.pushable(world, pos, direction, by, byPos)
+    if (isOpen(world, pos)) super.pushable(world, pos, direction, by, byPos)
     else Pushable.Solid.withoutAction
 }
 
