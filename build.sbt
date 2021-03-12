@@ -5,6 +5,11 @@ lazy val commonSettings: Seq[Setting[_]] = Seq(
   scalaVersion := "2.13.5",
 
   addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
+
+  version := {
+    val tagPrefix = "refs/tags/"
+    sys.env.get("CI_VERSION").filter(_.startsWith(tagPrefix)).map(_.drop(tagPrefix.length)).getOrElse(version.value)
+  }
 )
 
 lazy val root = project.in(file("."))
