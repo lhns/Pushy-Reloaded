@@ -25,7 +25,7 @@ case class ColorChangerTarget private(color: Color) extends TileInstance {
       case Player(_) =>
         Pushable.Empty.withoutAction
 
-      case ColorChanger(colorChanger) if colorChanger.nextColor == color =>
+      case ColorChanger(_) =>
         Pushable.Empty.withoutAction
 
       case _ =>
@@ -33,7 +33,7 @@ case class ColorChangerTarget private(color: Color) extends TileInstance {
     }
 
   override def missionComplete(world: World, pos: Vec2i): Boolean =
-    world.get(pos, ColorChanger).nonEmpty
+    world.get(pos, ColorChanger).exists(_.color == color)
 }
 
 object ColorChangerTarget extends TileFactory[ColorChangerTarget] {
