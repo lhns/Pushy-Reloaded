@@ -34,15 +34,7 @@ object Main {
         case "Enter" => restart()
         case "n" => next()
         case "b" => prev()
-        case " " =>
-          world.list(Player).foreach {
-            case (pos, player) if player.attributes.get(Projectile.ProjectileAttribute) =>
-              world.remove(pos, ProjectileCarryAnimation)
-              player.changeAttributes(_.put(Projectile.ProjectileAttribute)(false))
-              world.add(pos, ProjectileThrowAnimation(player.direction))
-
-            case _ =>
-          }
+        case " " => shoot()
         case key =>
           Option(key match {
             case "w" | "ArrowUp" => Direction.Up
@@ -61,7 +53,7 @@ object Main {
     if (dom.document.elementFromPoint(
       e.changedTouches(0).pageX,
       e.changedTouches(0).pageY
-    ).id != "restart") {
+    ).tagName.toLowerCase != "input") {
       e.preventDefault()
       val (x, y) = e.changedTouches(0).pipe(e => (e.clientX, e.clientY))
       val (width, height) = dom.window.document.body.pipe(e => (e.clientWidth, e.clientHeight))
@@ -84,6 +76,10 @@ object Main {
         }
       }
     }
+  })
+
+  dom.document.getElementById("shoot").addEventListener("click", (e: dom.Event) => {
+    shoot()
   })
 
   dom.document.getElementById("restart").addEventListener("click", (e: dom.Event) => {
@@ -146,6 +142,16 @@ object Main {
     if (currentLevel == 0) world = testWorld
     else Resource.level(s"$currentLevel.lev").foreach(world = _)
   }
+
+  def shoot(): Unit =
+    world.list(Player).foreach {
+      case (pos, player) if player.attributes.get(Projectile.ProjectileAttribute) =>
+        world.remove(pos, ProjectileCarryAnimation)
+        player.changeAttributes(_.put(Projectile.ProjectileAttribute)(false))
+        world.add(pos, ProjectileThrowAnimation(player.direction))
+
+      case _ =>
+    }
 
   def restart(): Unit =
     loadCurrentLevel()

@@ -28,7 +28,10 @@ object MainPage {
             canvas(id := "canvas", style := "width: auto; height: auto; max-width: 100%; max-height: 100%;"),
             div(style := "flex: 1"),
           ),
-          input(id := "restart", `type` := "button", style := "height: 2em; width: 10em;", value := "Restart"),
+          div(style := "display: flex; flex-direction: row;",
+            input(id := "restart", `type` := "button", style := "height: 2em; width: 10em;", value := "Restart"),
+            input(id := "shoot", `type` := "button", style := "height: 2em; width: 10em;", value := "Shoot"),
+          ),
           div(style := "flex: 1"),
         ),
         script(src := Server.webjarUri(frontendWebjarAsset))
