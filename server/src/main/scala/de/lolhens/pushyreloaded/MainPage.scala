@@ -20,7 +20,7 @@ object MainPage {
         tag("title")("Pushy Reloaded"),
         link(rel := "icon", `type` := "image/png", href := "assets/images/10.png", attr("sizes") := "32x32"),
       ),
-      body(style := "height: 100%; margin: 0;",
+      body(style := "height: 100%; margin: 0; touch-action: manipulation;",
         div(style := "height: 100%; display: flex; flex-direction: column; align-items: center; overflow: hidden;",
           div(style := "flex: 1"),
           div(style := "display: flex; flex-direction: row; overflow: hidden;",
