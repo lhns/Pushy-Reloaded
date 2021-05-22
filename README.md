@@ -2,6 +2,8 @@
 
 A web-based clone of the puzzle-game Pushy (even playable on mobile).
 
+Play on https://lolhens.github.io/Pushy-Reloaded/
+
 ## Usage
 
 - Move with `w`, `a`, `s`, `d`, the arrow keys or by touching on the four sides of the screen
