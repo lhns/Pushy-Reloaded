@@ -40,7 +40,7 @@ trait TileInstance {
   def zIndex: Int = pushable match {
     case Pushable.Empty => 0
     case Pushable.Solid => 1
-    case Pushable.Pushable | Pushable.Blocked => 2
+    case Pushable.Pushable | Pushable.Blocked => 5
   }
 
   def isEmpty: Boolean = false

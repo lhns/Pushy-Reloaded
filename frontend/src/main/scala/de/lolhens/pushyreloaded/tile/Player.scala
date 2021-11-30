@@ -20,7 +20,7 @@ class Player private(private var _direction: Direction) extends TileInstance wit
     if (attributes.get(Transformer.ChargedAttribute)) Player.chargedImage
     else Player.image
 
-  override val zIndex: Int = 10
+  override val zIndex: Int = Player.zIndex
 
   override val pushable: Pushable = Pushable.Solid
 
@@ -41,7 +41,6 @@ class Player private(private var _direction: Direction) extends TileInstance wit
               world.add(offset, Stamp)
           })
       }
-
 
     if (attributes.get(FarMove.FarMoveAttribute))
       moveStep().tap(if (_) {
@@ -64,6 +63,8 @@ object Player extends TileFactory[Player] {
   def apply(direction: Direction): Player = new Player(direction)
 
   val id: Int = 10
+
+  val zIndex: Int = 10
 
   private val image: Image = Resource.image(s"$id.png")
   private val chargedImage: Image = Resource.image("124.png")

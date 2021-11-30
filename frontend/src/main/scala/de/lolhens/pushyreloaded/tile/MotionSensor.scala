@@ -17,10 +17,13 @@ case class MotionSensor private(state: MotionSensor.State) extends TileInstance 
   override lazy val image: Image = state match {
     case State.Inactive => Resource.image("20.bmp")
     case State.Active => Resource.image("109.bmp")
-    case State.Closed => Resource.image("23.bmp")
+    case State.HalfClosed | State.Closed => Resource.image("23.bmp")
   }
 
   override val pushable: Pushable = Pushable.Solid
+
+  private def canClose(world: World, pos: Vec2i): Boolean =
+    !world.get(pos).exists(_.pushable == Pushable.Pushable)
 
   override def pushable(world: World, pos: Vec2i, direction: Direction, by: TileInstance, byPos: Vec2i): (Pushable, () => Unit) =
     state match {
@@ -31,7 +34,10 @@ case class MotionSensor private(state: MotionSensor.State) extends TileInstance 
               val others = world.list(MotionSensor).filterNot(e => e._1 == pos && e._2 == this)
               val othersActive = others.filter(_._2.state == State.Active)
               if (othersActive.nonEmpty) {
-                ((pos -> this) +: othersActive).foreach(e => world.change(e._1, e._2, e._2.withState(State.Closed)))
+                ((pos -> this) +: othersActive).foreach(e => world.change(e._1, e._2, e._2.withState(
+                  if (canClose(world, e._1)) State.Closed
+                  else State.HalfClosed
+                )))
               } else {
                 world.change(pos, this, this.withState(State.Active))
               }
@@ -39,6 +45,11 @@ case class MotionSensor private(state: MotionSensor.State) extends TileInstance 
 
           case _ =>
             Pushable.Empty.withoutAction
+        }
+
+      case State.HalfClosed =>
+        Pushable.Empty.withAction {
+          world.change(pos, this, this.withState(State.Closed))
         }
 
       case State.Closed =>
@@ -70,9 +81,11 @@ object MotionSensor extends TileFactory[MotionSensor] {
 
     case object Active extends State(1)
 
-    case object Closed extends State(2)
+    case object HalfClosed extends State(2)
 
-    val values: List[State] = List(Inactive, Active, Closed)
+    case object Closed extends State(3)
+
+    val values: List[State] = List(Inactive, Active, HalfClosed, Closed)
     val idValues: List[State] = List(Inactive, Closed)
   }
 

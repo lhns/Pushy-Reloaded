@@ -9,7 +9,7 @@ trait VisualInstance extends TileInstance {
 
   override def pushable: Pushable = Pushable.Empty
 
-  override def zIndex: Int = 3
+  override def zIndex: Int = 2
 }
 
 trait VisualFactory[+Instance <: TileInstance] extends TileFactory[Instance] {

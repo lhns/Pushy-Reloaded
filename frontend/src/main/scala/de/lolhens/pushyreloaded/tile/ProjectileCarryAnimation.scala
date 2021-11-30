@@ -9,7 +9,7 @@ sealed trait ProjectileCarryAnimation extends VisualInstance with VisualFactory[
 
   override val image: Image = Resource.image("107.png")
 
-  override val zIndex: Int = 15
+  override val zIndex: Int = Player.zIndex + 1
 }
 
 object ProjectileCarryAnimation extends ProjectileCarryAnimation

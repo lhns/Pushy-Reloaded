@@ -10,7 +10,7 @@ class ProjectileThrowAnimation private(direction: Direction) extends VisualInsta
 
   override def image: Image = ProjectileCarryAnimation.image
 
-  override val zIndex: Int = 15
+  override val zIndex: Int = Player.zIndex + 1
 
   private var lastMoved: Double = 0
 
