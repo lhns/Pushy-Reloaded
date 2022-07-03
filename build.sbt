@@ -2,7 +2,7 @@ lazy val commonSettings: Seq[Setting[_]] = Seq(
   name := "Pushy-Reloaded",
   version := "2.0.1-SNAPSHOT",
 
-  scalaVersion := "2.13.5",
+  scalaVersion := "2.13.8",
 
   addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
 
@@ -25,7 +25,7 @@ lazy val frontend = project
   .settings(
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "cats-core" % "2.6.0",
-      "io.monix" %%% "monix" % "3.3.0",
+      "io.monix" %%% "monix" % "3.4.1",
       "org.scala-js" %%% "scalajs-dom" % "1.1.0",
     ),
 
@@ -40,8 +40,8 @@ lazy val server = project
   .settings(
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % "1.2.11",
-      "io.monix" %% "monix" % "3.3.0",
-      "org.http4s" %% "http4s-blaze-server" % "0.23.12",
+      "io.monix" %% "monix" % "3.4.1",
+      "org.http4s" %% "http4s-blaze-server" % "0.21.33",
       "org.http4s" %% "http4s-circe" % "0.21.33",
       "org.http4s" %% "http4s-dsl" % "0.21.33",
       "org.http4s" %% "http4s-scalatags" % "0.21.33",
