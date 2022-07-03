@@ -25,7 +25,7 @@ lazy val frontend = project
   .settings(
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "cats-core" % "2.6.0",
-      "io.monix" %%% "monix" % "3.3.0",
+      "io.monix" %%% "monix" % "3.4.1",
       "org.scala-js" %%% "scalajs-dom" % "1.1.0",
     ),
 
@@ -40,7 +40,7 @@ lazy val server = project
   .settings(
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % "1.2.3",
-      "io.monix" %% "monix" % "3.3.0",
+      "io.monix" %% "monix" % "3.4.1",
       "org.http4s" %% "http4s-blaze-server" % "0.21.22",
       "org.http4s" %% "http4s-circe" % "0.21.22",
       "org.http4s" %% "http4s-dsl" % "0.21.22",
