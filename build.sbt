@@ -44,7 +44,7 @@ lazy val server = project
       "org.http4s" %% "http4s-blaze-server" % "0.21.33",
       "org.http4s" %% "http4s-circe" % "0.21.33",
       "org.http4s" %% "http4s-dsl" % "0.21.33",
-      "org.http4s" %% "http4s-scalatags" % "0.21.33",
+      "org.http4s" %% "http4s-scalatags" % "0.24.0",
     ),
 
     buildInfoKeys := Seq(
