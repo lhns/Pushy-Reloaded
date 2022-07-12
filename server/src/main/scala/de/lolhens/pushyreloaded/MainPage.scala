@@ -1,18 +1,11 @@
 package de.lolhens.pushyreloaded
 
-import buildinfo.BuildInfo
 import org.http4s.server.staticcontent.WebjarService.WebjarAsset
 import scalatags.Text.TypedTag
 import scalatags.Text.all._
 
 object MainPage {
-  private lazy val frontendWebjarAsset: WebjarAsset = WebjarAsset(
-    BuildInfo.frontendName,
-    BuildInfo.frontendVersion,
-    BuildInfo.frontendAsset
-  )
-
-  def apply(): TypedTag[String] =
+  def apply(webjarAsset: WebjarAsset): TypedTag[String] =
     html(style := "height: 100%;", lang := "de",
       head(
         meta(charset := "UTF-8"),
@@ -34,7 +27,7 @@ object MainPage {
           ),
           div(style := "flex: 1"),
         ),
-        script(src := Server.webjarUri(frontendWebjarAsset))
+        script(src := Server.webjarUri(webjarAsset))
       )
     )
 }

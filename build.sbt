@@ -1,3 +1,12 @@
+val V = new {
+  val cats = "2.6.0"
+  val catsEffect = "3.3.12"
+  val http4s = "0.23.13"
+  val http4sScalatags = "0.24.0"
+  val logbackClassic = "1.2.11"
+  val scalajsDom = "1.1.0"
+}
+
 lazy val commonSettings: Seq[Setting[_]] = Seq(
   name := "Pushy-Reloaded",
   version := "2.0.1-SNAPSHOT",
@@ -24,32 +33,32 @@ lazy val frontend = project
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "org.typelevel" %%% "cats-core" % "2.6.0",
-      "io.monix" %%% "monix" % "3.4.1",
-      "org.scala-js" %%% "scalajs-dom" % "1.1.0",
+      "org.typelevel" %%% "cats-core" % V.cats,
+      "org.typelevel" %%% "cats-effect" % V.catsEffect,
+      "org.scala-js" %%% "scalajs-dom" % V.scalajsDom,
     ),
 
-    scalaJSLinkerConfig := scalaJSLinkerConfig.value.withESFeatures(_.withUseECMAScript2015(false)),
+    scalaJSLinkerConfig := scalaJSLinkerConfig.value.withESFeatures(_.withESVersion(org.scalajs.linker.interface.ESVersion.ES5_1)),
     scalaJSUseMainModuleInitializer := true,
+  )
+
+lazy val frontendWebjar = frontend.webjar
+  .settings(
+    webjarAssetReferenceType := Some("http4s"),
+    libraryDependencies += "org.http4s" %% "http4s-server" % V.http4s
   )
 
 lazy val server = project
   .enablePlugins(BuildInfoPlugin)
-  .dependsOn(frontend.webjar)
+  .dependsOn(frontendWebjar)
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "ch.qos.logback" % "logback-classic" % "1.2.11",
-      "io.monix" %% "monix" % "3.4.1",
-      "org.http4s" %% "http4s-blaze-server" % "0.21.33",
-      "org.http4s" %% "http4s-circe" % "0.21.33",
-      "org.http4s" %% "http4s-dsl" % "0.21.33",
-      "org.http4s" %% "http4s-scalatags" % "0.21.33",
-    ),
-
-    buildInfoKeys := Seq(
-      "frontendAsset" -> (frontend / Compile / webjarMainResourceName).value,
-      "frontendName" -> (frontend / normalizedName).value,
-      "frontendVersion" -> (frontend / version).value,
-    ),
+      "ch.qos.logback" % "logback-classic" % V.logbackClassic,
+      "org.http4s" %% "http4s-ember-server" % V.http4s,
+      "org.http4s" %% "http4s-circe" % V.http4s,
+      "org.http4s" %% "http4s-dsl" % V.http4s,
+      "org.http4s" %% "http4s-scalatags" % V.http4sScalatags,
+      "org.typelevel" %% "cats-effect" % V.catsEffect,
+    )
   )
