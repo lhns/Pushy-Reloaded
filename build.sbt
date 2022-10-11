@@ -3,7 +3,7 @@ val V = new {
   val catsEffect = "3.3.14"
   val http4s = "0.23.16"
   val http4sScalatags = "0.25.0"
-  val logbackClassic = "1.4.3"
+  val logbackClassic = "1.4.4"
   val scalajsDom = "1.1.0"
 }
 
