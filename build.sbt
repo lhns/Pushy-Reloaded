@@ -1,6 +1,6 @@
 val V = new {
   val cats = "2.6.0"
-  val catsEffect = "3.4.11"
+  val catsEffect = "3.4.10"
   val http4s = "0.23.18"
   val http4sScalatags = "0.25.2"
   val logbackClassic = "1.4.7"
