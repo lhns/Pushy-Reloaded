@@ -21,6 +21,6 @@ jobs:
           java-version: '11'
       - name: Build
         run: sbt "; test; frontend/fullLinkJS"
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: 'frontend/target/scala-*/pushy-reloaded-opt/*'
