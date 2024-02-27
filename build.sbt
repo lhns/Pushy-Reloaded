@@ -11,7 +11,7 @@ lazy val commonSettings: Seq[Setting[_]] = Seq(
   name := "Pushy-Reloaded",
   version := "2.0.1-SNAPSHOT",
 
-  scalaVersion := "2.13.12",
+  scalaVersion := "2.13.13",
 
   addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
 
